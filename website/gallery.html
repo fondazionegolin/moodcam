@@ -68,6 +68,20 @@
         </div>
     </footer>
 
+    <!-- Photo Modal -->
+    <div id="photoModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <button class="modal-prev" id="prevBtn" onclick="changePhoto(-1)">&#10094;</button>
+        <button class="modal-next" id="nextBtn" onclick="changePhoto(1)">&#10095;</button>
+
+        <div class="modal-content-wrapper">
+            <div class="modal-photo-container">
+                <img class="modal-image" id="modalImg" src="">
+                <div class="modal-caption" id="modalCaption"></div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // API Configuration
         const API_BASE = '/api';
@@ -75,6 +89,14 @@
         let currentPage = 1;
         const photosPerPage = 12;
         let hasMore = true;
+        let allPhotos = []; // Store all loaded photos for navigation
+        let currentPhotoIndex = 0;
+
+        // Modal Elements
+        const modal = document.getElementById('photoModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalCaption = document.getElementById('modalCaption');
+        const body = document.body;
 
         // Load gallery photos
         async function loadPhotos(page = 1) {
@@ -83,6 +105,7 @@
 
             if (page === 1) {
                 grid.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+                allPhotos = []; // Reset on refresh
             }
 
             try {
@@ -94,8 +117,14 @@
                 }
 
                 if (data.photos && data.photos.length > 0) {
-                    data.photos.forEach(photo => {
-                        grid.appendChild(createPhotoCard(photo));
+                    // Start index for new batch
+                    const startIndex = allPhotos.length;
+
+                    // Add new photos to global array
+                    allPhotos = [...allPhotos, ...data.photos];
+
+                    data.photos.forEach((photo, i) => {
+                        grid.appendChild(createPhotoCard(photo, startIndex + i));
                     });
 
                     hasMore = data.hasMore;
@@ -122,7 +151,7 @@
         }
 
         // Create photo card element
-        function createPhotoCard(photo) {
+        function createPhotoCard(photo, index) {
             const card = document.createElement('div');
             card.className = 'gallery-item';
 
@@ -134,17 +163,25 @@
                 year: 'numeric'
             });
 
+            card.onclick = (e) => {
+                // Prevent opening if clicking on meta links (if any)
+                if (!e.target.closest('a')) {
+                    openModal(index);
+                }
+            };
+
             card.innerHTML = `
                 <img src="${photo.imageUrl}" alt="Photo by ${photo.username}" loading="lazy">
                 <div class="gallery-item-meta">
                     <div class="meta-line">
-                        <span>${photo.device || 'Unknown Device'}</span>
-                        <span class="meta-separator">•</span>
-                        <span>${dateStr}</span>
-                        <span class="meta-separator">•</span>
+                        <span class="username">@${photo.username}</span>
+                    </div>
+                    <div class="meta-line" style="font-size: 0.8em;">
                         <span>${photo.filter || 'No Filter'}</span>
                         <span class="meta-separator">•</span>
-                        <span>@${photo.username}</span>
+                        <span>${photo.device || 'Unknown'}</span>
+                        <span class="meta-separator">•</span>
+                        <span>${dateStr}</span>
                     </div>
                 </div>
             `;
@@ -152,10 +189,76 @@
             return card;
         }
 
-        // Load more button handler
+        // Modal Functions
+        function openModal(index) {
+            currentPhotoIndex = index;
+            updateModalContent();
+            modal.style.display = 'block';
+            // Trigger reflow
+            modal.offsetHeight;
+            modal.classList.add('show');
+            body.classList.add('modal-open');
+        }
+
+        function closeModal() {
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                body.classList.remove('modal-open');
+            }, 300);
+        }
+
+        function changePhoto(direction) {
+            let newIndex = currentPhotoIndex + direction;
+            if (newIndex >= 0 && newIndex < allPhotos.length) {
+                currentPhotoIndex = newIndex;
+                updateModalContent();
+            }
+        }
+
+        function updateModalContent() {
+            const photo = allPhotos[currentPhotoIndex];
+            modalImg.src = photo.imageUrl;
+
+            // Format date
+            const date = new Date(photo.timestamp);
+            const dateStr = date.toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
+            });
+
+            modalCaption.innerHTML = `
+                ${photo.filter || 'Analog Filter'} <span style="margin: 0 10px; color: #ccc;">|</span> 
+                @${photo.username} <span style="margin: 0 10px; color: #ccc;">|</span>
+                ${dateStr}
+            `;
+
+            // Update arrow visibility
+            document.getElementById('prevBtn').style.display = currentPhotoIndex > 0 ? 'block' : 'none';
+            document.getElementById('nextBtn').style.display = currentPhotoIndex < allPhotos.length - 1 ? 'block' : 'none';
+        }
+
+        // Event Listeners
         document.getElementById('loadMoreBtn').addEventListener('click', () => {
             currentPage++;
             loadPhotos(currentPage);
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (!modal.classList.contains('show')) return;
+
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'ArrowLeft') changePhoto(-1);
+            if (e.key === 'ArrowRight') changePhoto(1);
+        });
+
+        // Click outside to close
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal || e.target.classList.contains('modal-content-wrapper')) {
+                closeModal();
+            }
         });
 
         // Initial load
