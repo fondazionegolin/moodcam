@@ -306,11 +306,42 @@ vec3 applyHalation(vec3 rgb, float amount) {
     return rgb + halationColor;
 }
 
-// Clarity (local contrast)
-vec3 applyClarity(vec3 rgb, float amount, float lumaVal) {
-    float midtoneBoost = 1.0 - abs(lumaVal - 0.5) * 2.0;
-    float clarityFactor = 1.0 + (amount * midtoneBoost * 0.3);
-    return (rgb - 0.5) * clarityFactor + 0.5;
+// Clarity (local contrast enhancement - Lightroom style)
+// Uses a simplified unsharp mask approach:
+// - Positive: enhances local contrast (sharpens midtones)
+// - Negative: softens/creates glow effect
+vec3 applyClarity(vec3 rgb, vec2 uv, float amount) {
+    // Sample neighboring pixels to approximate local average (low-pass)
+    vec2 texelSize = 1.0 / uResolution;
+    float radius = 3.0; // Larger radius = more "local" contrast
+    
+    vec3 blur = vec3(0.0);
+    float totalWeight = 0.0;
+    
+    // 5x5 box blur approximation for local average
+    for (float x = -2.0; x <= 2.0; x += 1.0) {
+        for (float y = -2.0; y <= 2.0; y += 1.0) {
+            vec2 offset = vec2(x, y) * texelSize * radius;
+            float weight = 1.0 - length(vec2(x, y)) / 4.0; // Distance falloff
+            blur += texture(uCameraTexture, uv + offset).rgb * weight;
+            totalWeight += weight;
+        }
+    }
+    blur /= totalWeight;
+    
+    // High-pass = original - blur (the detail/edges)
+    vec3 highPass = rgb - blur;
+    
+    // Apply clarity based on amount:
+    // Positive: add high-pass (sharpen local contrast)
+    // Negative: subtract high-pass (soften/glow)
+    float clarityStrength = amount * 1.5; // Scale for visible effect
+    
+    // Protect highlights and shadows - only affect midtones
+    float luminance = luma(rgb);
+    float midtoneMask = 1.0 - pow(abs(luminance - 0.5) * 2.0, 2.0);
+    
+    return rgb + highPass * clarityStrength * midtoneMask;
 }
 
 // ============================================================
@@ -352,9 +383,9 @@ void main() {
         rgb *= getVignette(vTexCoord, uVignette);
     }
     
-    // Clarity
+    // Clarity (local contrast - apply early for best effect)
     if (abs(uClarity) > 0.001) {
-        rgb = applyClarity(rgb, uClarity, Y);
+        rgb = applyClarity(rgb, vTexCoord, uClarity);
         rgb = clamp(rgb, 0.0, 1.0);
     }
     
