@@ -260,37 +260,26 @@ vec3 applyHalation(vec3 rgb, float amount) {
     return rgb + halationColor;
 }
 
-// Clarity (local contrast enhancement - Lightroom style)
-// Uses unsharp mask approach for local contrast
+// Clarity (local contrast enhancement)
+// Positive: sharpens edges, Negative: softens/glow
 vec3 applyClarity(vec3 rgb, vec2 uv, float amount) {
     vec2 texelSize = 1.0 / uResolution;
-    float radius = 3.0;
+    float radius = 2.0;
     
-    vec3 blur = vec3(0.0);
-    float totalWeight = 0.0;
+    // 3x3 cross-pattern sampling
+    vec3 center = rgb;
+    vec3 top = texture(uCameraTexture, uv + vec2(0.0, texelSize.y) * radius).rgb;
+    vec3 bottom = texture(uCameraTexture, uv - vec2(0.0, texelSize.y) * radius).rgb;
+    vec3 left = texture(uCameraTexture, uv - vec2(texelSize.x, 0.0) * radius).rgb;
+    vec3 right = texture(uCameraTexture, uv + vec2(texelSize.x, 0.0) * radius).rgb;
     
-    // 5x5 weighted blur for local average
-    for (float x = -2.0; x <= 2.0; x += 1.0) {
-        for (float y = -2.0; y <= 2.0; y += 1.0) {
-            vec2 offset = vec2(x, y) * texelSize * radius;
-            float weight = 1.0 - length(vec2(x, y)) / 4.0;
-            blur += texture(uCameraTexture, uv + offset).rgb * weight;
-            totalWeight += weight;
-        }
-    }
-    blur /= totalWeight;
+    vec3 neighbors = (top + bottom + left + right) * 0.25;
+    vec3 highPass = center - neighbors;
     
-    // High-pass = original - blur
-    vec3 highPass = rgb - blur;
-    
-    // Positive: sharpen, Negative: soften/glow
-    float clarityStrength = amount * 1.5;
-    
-    // Protect highlights and shadows
     float luminance = luma(rgb);
-    float midtoneMask = 1.0 - pow(abs(luminance - 0.5) * 2.0, 2.0);
+    float midtoneMask = smoothstep(0.0, 0.2, luminance) * smoothstep(1.0, 0.8, luminance);
     
-    return rgb + highPass * clarityStrength * midtoneMask;
+    return rgb + highPass * amount * midtoneMask * 2.0;
 }
 
 // ============================================================

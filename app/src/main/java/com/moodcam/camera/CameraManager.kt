@@ -7,9 +7,11 @@ import androidx.camera.extensions.ExtensionsManager
 import androidx.camera.extensions.ExtensionMode
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager as Camera2Manager
+import android.os.Build
 import android.util.Log
 import android.view.Surface
 import androidx.camera.core.*
+import androidx.camera.core.DisplayOrientedMeteringPointFactory
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
@@ -311,31 +313,43 @@ class CameraManager(private val context: Context) {
     /**
      * Tap to focus and lock exposure at specific coordinates.
      * x, y are in view coordinates (0 to viewWidth/Height).
-     * We need to convert to normalized coordinates (0.0 to 1.0).
+     * Uses DisplayOrientedMeteringPointFactory for accurate coordinate mapping.
      */
     fun focusAt(x: Float, y: Float, viewWidth: Int, viewHeight: Int) {
         val cameraControl = camera?.cameraControl ?: return
+        val cameraInfo = camera?.cameraInfo ?: return
         
-        // Convert tap coordinates to normalized (0-1) range
-        val normalizedX = (x / viewWidth.toFloat()).coerceIn(0f, 1f)
-        val normalizedY = (y / viewHeight.toFloat()).coerceIn(0f, 1f)
+        // Get the display for rotation info
+        val display = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            context.display
+        } else {
+            @Suppress("DEPRECATION")
+            (context.getSystemService(Context.WINDOW_SERVICE) as android.view.WindowManager).defaultDisplay
+        } ?: return
         
-        // Use SurfaceOrientedMeteringPointFactory with 1.0x1.0 dimensions
-        // so we can pass normalized coordinates directly
-        val factory = SurfaceOrientedMeteringPointFactory(1f, 1f)
+        // Use DisplayOrientedMeteringPointFactory which handles:
+        // - Display rotation
+        // - Camera sensor orientation  
+        // - Front camera mirroring
+        val factory = DisplayOrientedMeteringPointFactory(
+            display,
+            cameraInfo,
+            viewWidth.toFloat(),
+            viewHeight.toFloat()
+        )
         
-        // Create metering point at normalized tap location
-        // Size 0.1 = 10% of frame, good balance for AF/AE region
-        val point = factory.createPoint(normalizedX, normalizedY, 0.1f)
+        // Create metering point at tap location
+        // Size 0.05 = 5% of frame for precise AF point
+        val point = factory.createPoint(x, y, 0.05f)
         
-        // Lock AF, AE, and AWB on this point
-        val action = FocusMeteringAction.Builder(point, 
+        // Start AF, AE, AWB metering on this point
+        val action = FocusMeteringAction.Builder(point,
             FocusMeteringAction.FLAG_AF or FocusMeteringAction.FLAG_AE or FocusMeteringAction.FLAG_AWB)
             .disableAutoCancel() // Keep locked until next tap
             .build()
         
         cameraControl.startFocusAndMetering(action)
-        Log.d(TAG, "Focus/AE locked at normalized ($normalizedX, $normalizedY)")
+        Log.d(TAG, "Focus at ($x, $y) in view ${viewWidth}x${viewHeight}")
     }
     
     /**
