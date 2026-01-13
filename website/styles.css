@@ -46,16 +46,42 @@
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     font-family: var(--font-main);
     background-color: var(--bg-color);
     color: var(--text-main);
     line-height: 1.6;
     overflow-x: hidden;
+}
+
+/* Scroll Reveal Animation */
+.reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.reveal-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.reveal-left.active,
+.reveal-right.active {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .container {
@@ -123,6 +149,7 @@ a {
     font-size: 1.8rem;
     background: linear-gradient(135deg, var(--accent-teal), var(--primary), var(--accent-pink));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -176,6 +203,7 @@ a {
     /* Vivid gradient text */
     background: linear-gradient(90deg, var(--accent-teal), var(--primary), var(--accent-pink));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -385,11 +413,19 @@ a {
 .gallery-page {
     padding-top: 100px;
     min-height: 100vh;
+    background-color: #2D2D2D;
+    /* Darker grey background for contrast */
+    color: #f0f0f0;
 }
 
 .gallery-header {
     text-align: center;
     padding: var(--spacing-lg) 0;
+    color: white;
+}
+
+.gallery-header .section-subtitle {
+    color: #aaa;
 }
 
 .gallery-grid {

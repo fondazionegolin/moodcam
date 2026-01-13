@@ -743,7 +743,7 @@ fun CameraScreen(
                                 }
                                 
                                 // Save via ViewModel
-                                viewModel.capturePhoto(processedBitmap, uiState.frameWidth)
+                                viewModel.capturePhoto(processedBitmap, uiState.frameWidth, rotation = rotation)
                             }
                         }
                     }

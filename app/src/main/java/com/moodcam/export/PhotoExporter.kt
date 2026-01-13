@@ -34,18 +34,28 @@ class PhotoExporter(private val context: Context) {
     suspend fun exportPhoto(
         bitmap: Bitmap,
         presetName: String,
-        quality: Int = 95
+        quality: Int = 95,
+        rotation: Int = 0
     ): Uri? = withContext(Dispatchers.IO) {
         try {
+            // Rotate bitmap if needed
+            val finalBitmap = if (rotation != 0) {
+                val matrix = android.graphics.Matrix()
+                matrix.postRotate(rotation.toFloat())
+                Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+            } else {
+                bitmap
+            }
+
             val timestamp = dateFormat.format(Date())
             val filename = "MOODCAM_$timestamp.jpg"
             
             val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 // Android 10+ - use MediaStore
-                saveToMediaStore(bitmap, filename, presetName, quality)
+                saveToMediaStore(finalBitmap, filename, presetName, quality)
             } else {
                 // Legacy - save to Pictures directory
-                saveToLegacyStorage(bitmap, filename, presetName, quality)
+                saveToLegacyStorage(finalBitmap, filename, presetName, quality)
             }
             
             Log.d(TAG, "Photo saved: $uri")

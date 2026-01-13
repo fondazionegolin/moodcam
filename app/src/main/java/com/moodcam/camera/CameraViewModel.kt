@@ -220,7 +220,7 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
      * @param bitmap GPU-rendered bitmap from GLRenderer
      * @param frameWidth Frame width (-1 to +1, negative = black, positive = white)
      */
-    fun capturePhoto(bitmap: Bitmap, frameWidth: Float = 0f) {
+    fun capturePhoto(bitmap: Bitmap, frameWidth: Float = 0f, rotation: Int = 0) {
         viewModelScope.launch {
             _uiState.update { it.copy(isCapturing = true) }
             
@@ -234,7 +234,7 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
                 
                 val presetName = _selectedPreset.value?.name ?: "Unknown"
                 
-                val uri = photoExporter.exportPhoto(finalBitmap, presetName)
+                val uri = photoExporter.exportPhoto(finalBitmap, presetName, rotation = rotation)
                 
                 if (uri != null) {
                     _uiState.update { it.copy(
@@ -407,7 +407,7 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
                 
                 val selection = "${MediaStore.Images.Media.DISPLAY_NAME} LIKE ?"
                 val selectionArgs = arrayOf("MOODCAM_%")
-                val sortOrder = "${MediaStore.Images.Media.DATE_TAKEN} DESC"
+                val sortOrder = "${MediaStore.Images.Media.DATE_ADDED} DESC"
                 
                 try {
                     context.contentResolver.query(

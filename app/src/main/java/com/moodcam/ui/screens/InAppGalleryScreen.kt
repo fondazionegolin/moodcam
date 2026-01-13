@@ -30,6 +30,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.moodcam.camera.CameraViewModel
@@ -69,7 +71,7 @@ fun InAppGalleryScreen(
     
     val galleryPhotos by viewModel.galleryPhotos.collectAsState()
     
-    var selectedPhoto by remember { mutableStateOf<Uri?>(null) }
+    var selectedPhotoIndex by remember { mutableStateOf(-1) }
     var showUsernameDialog by remember { mutableStateOf(false) }
     
     // Main Gallery Grid
@@ -131,7 +133,9 @@ fun InAppGalleryScreen(
                         modifier = Modifier
                             .aspectRatio(1f)
                             .clip(RoundedCornerShape(4.dp))
-                            .clickable { selectedPhoto = uri },
+                            .aspectRatio(1f)
+                            .clip(RoundedCornerShape(4.dp))
+                            .clickable { selectedPhotoIndex = galleryPhotos.indexOf(uri) },
                         contentScale = ContentScale.Crop
                     )
                 }
@@ -141,15 +145,16 @@ fun InAppGalleryScreen(
     
     // Full Screen Viewer
     AnimatedVisibility(
-        visible = selectedPhoto != null,
+        visible = selectedPhotoIndex != -1,
         enter = fadeIn(),
         exit = fadeOut()
     ) {
-        selectedPhoto?.let { uri ->
+        if (selectedPhotoIndex != -1 && galleryPhotos.isNotEmpty()) {
             PhotoViewer(
-                photoUri = uri,
-                onClose = { selectedPhoto = null },
-                onUpload = {
+                photos = galleryPhotos,
+                initialIndex = selectedPhotoIndex,
+                onClose = { selectedPhotoIndex = -1 },
+                onUpload = { uri ->
                     scope.launch {
                         val manager = GalleryUploadManager(context)
                         // In real app, get preset name from EXIF or ViewModel
@@ -205,11 +210,13 @@ fun InAppGalleryScreen(
 
 @Composable
 fun PhotoViewer(
-    photoUri: Uri,
+    photos: List<Uri>,
+    initialIndex: Int,
     onClose: () -> Unit,
-    onUpload: () -> Unit
+    onUpload: (Uri) -> Unit
 ) {
     var isUploading by remember { mutableStateOf(false) }
+    val pagerState = rememberPagerState(initialPage = initialIndex) { photos.size }
     
     BackHandler { onClose() }
     
@@ -218,12 +225,17 @@ fun PhotoViewer(
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        AsyncImage(
-            model = photoUri,
-            contentDescription = "Full photo",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Fit
-        )
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier.fillMaxSize()
+        ) { page ->
+            AsyncImage(
+                model = photos[page],
+                contentDescription = "Full photo",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Fit
+            )
+        }
         
         // Top Bar
         Row(
@@ -253,7 +265,10 @@ fun PhotoViewer(
             Button(
                 onClick = {
                     isUploading = true
-                    onUpload()
+                    // Upload current photo
+                    if (pagerState.currentPage < photos.size) {
+                        onUpload(photos[pagerState.currentPage])
+                    }
                     // Reset uploading state after delay/callback (simplified)
                     ConstantScope.launch { 
                         kotlinx.coroutines.delay(2000)
