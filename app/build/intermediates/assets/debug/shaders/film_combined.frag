@@ -30,6 +30,9 @@ uniform float uGrainSize;
 uniform int uGrainToneMode;
 
 uniform float uVignette;
+uniform float uBloom;
+uniform float uHalation;
+uniform float uClarity;
 
 uniform int uPortraitMode;
 uniform sampler2D uMaskTexture;
@@ -287,6 +290,29 @@ vec3 dither(vec3 color, vec2 uv) {
     return color + ditherVal;
 }
 
+// Bloom (glow on bright areas)
+vec3 applyBloom(vec3 rgb, float amount) {
+    float brightness = luma(rgb);
+    float bloomMask = smoothstep(0.6, 1.0, brightness);
+    vec3 bloomColor = rgb * bloomMask * amount;
+    return rgb + bloomColor;
+}
+
+// Halation (red glow around bright areas)
+vec3 applyHalation(vec3 rgb, float amount) {
+    float brightness = luma(rgb);
+    float halationMask = smoothstep(0.7, 1.0, brightness);
+    vec3 halationColor = vec3(1.0, 0.3, 0.1) * halationMask * amount * 0.5;
+    return rgb + halationColor;
+}
+
+// Clarity (local contrast)
+vec3 applyClarity(vec3 rgb, float amount, float lumaVal) {
+    float midtoneBoost = 1.0 - abs(lumaVal - 0.5) * 2.0;
+    float clarityFactor = 1.0 + (amount * midtoneBoost * 0.3);
+    return (rgb - 0.5) * clarityFactor + 0.5;
+}
+
 // ============================================================
 // MAIN
 // ============================================================
@@ -324,6 +350,24 @@ void main() {
     
     if (uVignette > 0.001) {
         rgb *= getVignette(vTexCoord, uVignette);
+    }
+    
+    // Clarity
+    if (abs(uClarity) > 0.001) {
+        rgb = applyClarity(rgb, uClarity, Y);
+        rgb = clamp(rgb, 0.0, 1.0);
+    }
+    
+    // Bloom
+    if (uBloom > 0.001) {
+        rgb = applyBloom(rgb, uBloom);
+        rgb = clamp(rgb, 0.0, 1.0);
+    }
+    
+    // Halation
+    if (uHalation > 0.001) {
+        rgb = applyHalation(rgb, uHalation);
+        rgb = clamp(rgb, 0.0, 1.0);
     }
     
     rgb = linearToSrgb(rgb);

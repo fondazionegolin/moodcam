@@ -463,6 +463,15 @@ private fun EffectsTab(
             onParamsChanged(params.copy(effects = params.effects.copy(halation = it)))
         }
         
+        ParamSlider(
+            label = "Clarity",
+            value = params.clarity,
+            valueRange = -1f..1f,
+            valueDisplay = { String.format("%+.0f", it * 100) }
+        ) {
+            onParamsChanged(params.copy(clarity = it))
+        }
+        
         Divider(modifier = Modifier.padding(vertical = 8.dp))
         
         // Bokeh aperture selector
