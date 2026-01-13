@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoodCam - Authentic Film Photography</title>
+    <title>MoodCam - Film Camera for Android</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/png" href="favicon.png">
@@ -28,102 +28,72 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <!-- Hero Section - Simplified -->
+    <section class="hero" style="min-height: 90vh;">
         <div class="hero-content">
-            <h1 class="hero-title">Capture moments.<br><span class="accent">Feel the grain.</span></h1>
-            <p class="hero-subtitle">Transform your digital photos into authentic film memories with MoodCam's
-                handcrafted film simulations.</p>
-            <div class="hero-buttons">
-                <a href="#download" class="btn btn-primary">Download for Android</a>
-                <a href="gallery.html" class="btn btn-secondary">View Gallery</a>
+            <h1 class="hero-title" style="font-size: 3.5rem;">Film Photography.<br><span class="accent">In Your
+                    Pocket.</span></h1>
+            <p class="hero-subtitle" style="font-size: 1.3rem; max-width: 500px;">Authentic film simulations, real
+                grain, classic colors. No filters—real film science.</p>
+            <div class="hero-buttons" style="margin-top: 2rem;">
+                <a href="https://play.google.com/store/apps/details?id=com.moodcam" class="btn btn-primary btn-large"
+                    style="font-size: 1.1rem; padding: 1rem 2rem;">
+                    <span style="margin-right: 0.5rem;">▶</span> Get it on Google Play
+                </a>
             </div>
+            <p style="color: var(--text-muted); margin-top: 1rem; font-size: 0.9rem;">Free • Android 8.0+</p>
         </div>
         <div class="hero-image">
             <div class="phone-mockup">
                 <div class="phone-screen">
-                    <img src="screenshot_camera.jpg" class="sample-photo" alt="MoodCam Camera Interface"
+                    <img src="screenshot_camera.jpg" class="sample-photo" alt="MoodCam Camera"
                         style="width:100%; height:100%; object-fit:cover;">
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="features" id="features">
-        <div class="container">
-            <h2 class="section-title reveal">Why MoodCam?</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🎞️</div>
-                    <h3>Authentic Film Grain</h3>
-                    <p>Real organic grain patterns, not digital noise. Each frame unique, just like real film.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
-                    <h3>Classic Film Stocks</h3>
-                    <p>Provia, Velvia, Portra, Ektar and more. Legendary colors at your fingertips.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Real-Time Preview</h3>
-                    <p>See the film look before you shoot. WYSIWYG photography.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔧</div>
-                    <h3>Full Control</h3>
-                    <p>Curves, white balance, tones. Edit like a pro or use presets.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📤</div>
-                    <h3>Share & Export</h3>
-                    <p>Share to our community gallery or export your custom profiles.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Tap to Focus</h3>
-                    <p>Precise AE lock and exposure compensation for perfect shots.</p>
-                </div>
+    <!-- Single Feature Strip -->
+    <section style="background: var(--text-main); padding: 3rem 0;">
+        <div class="container"
+            style="display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap; text-align: center;">
+            <div style="color: white;">
+                <div style="font-size: 2rem;">🎞️</div>
+                <div style="font-weight: 700;">Real Film Grain</div>
             </div>
-        </div>
-        </div>
+            <div style="color: white;">
+                <div style="font-size: 2rem;">🎨</div>
+                <div style="font-weight: 700;">Classic Film Stocks</div>
+            </div>
+            <div style="color: white;">
+                <div style="font-size: 2rem;">⚡</div>
+                <div style="font-weight: 700;">Live Preview</div>
+            </div>
+            <div style="color: white;">
+                <div style="font-size: 2rem;">🔧</div>
+                <div style="font-weight: 700;">Pro Controls</div>
+            </div>
         </div>
     </section>
 
-    <!-- App Showcase -->
-    <section class="showcase reveal" style="padding: 4rem 0; background: #fff; text-align: center;">
+    <!-- Screenshot -->
+    <section style="padding: 4rem 0; background: #f8f8f8; text-align: center;">
         <div class="container">
-            <h2 class="section-title" style="margin-bottom: 2rem;">Professional Controls</h2>
             <div
-                style="max-width: 800px; margin: 0 auto; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.15);">
-                <img src="screenshot_editor.jpg" alt="MoodCam Curve Editor" style="width: 100%; display: block;">
+                style="max-width: 700px; margin: 0 auto; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.12);">
+                <img src="screenshot_editor.jpg" alt="MoodCam Editor" style="width: 100%; display: block;">
             </div>
         </div>
     </section>
 
-    <!-- Gallery Preview -->
-    <section class="gallery-preview">
-        <div class="container">
-            <h2 class="section-title">Community Gallery</h2>
-            <p class="section-subtitle">Photos shared by MoodCam photographers</p>
-            <div class="preview-grid" id="galleryPreview">
-                <!-- Populated by JS -->
-            </div>
-            <a href="gallery.html" class="btn btn-secondary">View All Photos</a>
-        </div>
-    </section>
-
-    <!-- Download Section -->
-    <section class="download" id="download">
-        <div class="container">
-            <div class="download-content">
-                <h2>Ready to feel the grain?</h2>
-                <p>Download MoodCam and start creating authentic film photos today.</p>
-                <a href="#" class="btn btn-primary btn-large">
-                    <span class="btn-icon">▶</span>
-                    Download for Android
-                </a>
-                <p class="download-note">Requires Android 8.0 or later</p>
-            </div>
+    <!-- Final CTA -->
+    <section class="download" id="download" style="padding: 5rem 0;">
+        <div class="container" style="text-align: center;">
+            <h2 style="color: white; font-size: 2.5rem; margin-bottom: 1rem;">Start Shooting Film Today</h2>
+            <a href="https://play.google.com/store/apps/details?id=com.moodcam" class="btn btn-primary btn-large"
+                style="font-size: 1.2rem; padding: 1.2rem 3rem;">
+                Download Free on Google Play
+            </a>
         </div>
     </section>
 
@@ -138,14 +108,14 @@
                 <div class="footer-links">
                     <a href="gallery.html">Gallery</a>
                     <a href="profiles.html">Film Profiles</a>
-                    <a href="mailto:hello@moodcam.app">Contact</a>
                 </div>
-                <p class="footer-copyright">© 2024 MoodCam. Made with ❤️ for film lovers.</p>
+                <p class="footer-copyright">© 2024 MoodCam</p>
             </div>
         </div>
     </footer>
 
     <script src="script.js"></script>
+    <script src="editor.js"></script>
 </body>
 
 </html>
