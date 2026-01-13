@@ -168,8 +168,8 @@ class ProfileEditor {
     loadSampleImage() {
         const img = new Image();
         img.crossOrigin = 'anonymous';
-        // Use a sample image from the gallery or a default
-        img.src = 'screenshot_editor.jpg';
+        // Use the portrait sample image
+        img.src = 'sample_portrait.jpg';
 
         img.onload = () => {
             // Set canvas size to match image (scaled down for performance)

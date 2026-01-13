@@ -211,6 +211,9 @@ class GLRenderer(
             setInt("uGrainToneMode", params.grain.toneMode.ordinal)
             
             setFloat("uVignette", params.effects.vignette)
+            setFloat("uBloom", params.effects.bloom)
+            setFloat("uHalation", params.effects.halation)
+            setFloat("uClarity", params.clarity)
             
             setVec2("uResolution", viewportWidth.toFloat(), viewportHeight.toFloat())
             setFloat("uTime", frameTime)

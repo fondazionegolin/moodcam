@@ -66,6 +66,10 @@ data class PresetParams(
     @SerializedName("tint")
     val tint: Float = 0f,
     
+    // Clarity (local contrast)
+    @SerializedName("clarity")
+    val clarity: Float = 0f,
+    
     // Curves
     @SerializedName("curves")
     val curves: CurveParams = CurveParams(),

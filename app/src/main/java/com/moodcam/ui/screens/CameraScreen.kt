@@ -742,8 +742,8 @@ fun CameraScreen(
                                     rawBitmap
                                 }
                                 
-                                // Save via ViewModel
-                                viewModel.capturePhoto(processedBitmap, uiState.frameWidth, rotation = rotation)
+                                // Save via ViewModel (bitmap already rotated above, so pass 0)
+                                viewModel.capturePhoto(processedBitmap, uiState.frameWidth, rotation = 0)
                             }
                         }
                     }

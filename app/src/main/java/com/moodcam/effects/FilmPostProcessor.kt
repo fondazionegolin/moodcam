@@ -96,6 +96,9 @@ class FilmPostProcessor(private val context: Context) {
             shader.setInt("uGrainToneMode", p.grain.toneMode.ordinal)
             
             shader.setFloat("uVignette", p.effects.vignette)
+            shader.setFloat("uBloom", p.effects.bloom)
+            shader.setFloat("uHalation", p.effects.halation)
+            shader.setFloat("uClarity", p.clarity)
             
             // Disable portrait processing in shader (photo already has bokeh or is flat)
             shader.setInt("uPortraitMode", 0)
