@@ -310,25 +310,32 @@ class CameraManager(private val context: Context) {
     
     /**
      * Tap to focus and lock exposure at specific coordinates.
-     * AE is locked until next tap or camera restart.
+     * x, y are in view coordinates (0 to viewWidth/Height).
+     * We need to convert to normalized coordinates (0.0 to 1.0).
      */
     fun focusAt(x: Float, y: Float, viewWidth: Int, viewHeight: Int) {
         val cameraControl = camera?.cameraControl ?: return
         
-        val factory = SurfaceOrientedMeteringPointFactory(
-            viewWidth.toFloat(),
-            viewHeight.toFloat()
-        )
-        // Create metering point at tap location
-        val point = factory.createPoint(x, y, 0.15f)
+        // Convert tap coordinates to normalized (0-1) range
+        val normalizedX = (x / viewWidth.toFloat()).coerceIn(0f, 1f)
+        val normalizedY = (y / viewHeight.toFloat()).coerceIn(0f, 1f)
         
-        // Lock AE on this point - no auto-cancel for persistent lock
-        val action = FocusMeteringAction.Builder(point, FocusMeteringAction.FLAG_AF or FocusMeteringAction.FLAG_AE or FocusMeteringAction.FLAG_AWB)
-            .disableAutoCancel() // Keep AE locked until next tap
+        // Use SurfaceOrientedMeteringPointFactory with 1.0x1.0 dimensions
+        // so we can pass normalized coordinates directly
+        val factory = SurfaceOrientedMeteringPointFactory(1f, 1f)
+        
+        // Create metering point at normalized tap location
+        // Size 0.1 = 10% of frame, good balance for AF/AE region
+        val point = factory.createPoint(normalizedX, normalizedY, 0.1f)
+        
+        // Lock AF, AE, and AWB on this point
+        val action = FocusMeteringAction.Builder(point, 
+            FocusMeteringAction.FLAG_AF or FocusMeteringAction.FLAG_AE or FocusMeteringAction.FLAG_AWB)
+            .disableAutoCancel() // Keep locked until next tap
             .build()
         
         cameraControl.startFocusAndMetering(action)
-        Log.d(TAG, "AE locked at ($x, $y)")
+        Log.d(TAG, "Focus/AE locked at normalized ($normalizedX, $normalizedY)")
     }
     
     /**
