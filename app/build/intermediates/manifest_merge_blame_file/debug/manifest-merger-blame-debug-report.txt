@@ -1,0 +1,230 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.moodcam"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+9        android:targetSdkVersion="34" />
+10
+11    <!-- Camera permissions -->
+12    <uses-permission android:name="android.permission.CAMERA" />
+12-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:5:5-65
+12-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:5:22-62
+13
+14    <!-- Storage permissions for saving photos -->
+15    <uses-permission
+15-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:8:5-9:38
+16        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+16-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:8:22-78
+17        android:maxSdkVersion="28" />
+17-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:9:9-35
+18    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+18-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:10:5-76
+18-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:10:22-73
+19
+20    <!-- Haptic feedback -->
+21    <uses-permission android:name="android.permission.VIBRATE" />
+21-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:13:5-66
+21-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:13:22-63
+22
+23    <!-- Hardware features -->
+24    <uses-feature
+24-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:16:5-84
+25        android:name="android.hardware.camera"
+25-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:16:19-57
+26        android:required="true" />
+26-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:16:58-81
+27    <uses-feature
+27-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:17:5-95
+28        android:name="android.hardware.camera.autofocus"
+28-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:17:19-67
+29        android:required="false" />
+29-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:17:68-92
+30    <uses-feature
+30-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:18:5-78
+31        android:glEsVersion="0x00030000"
+31-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:18:19-51
+32        android:required="true" />
+32-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:18:52-75
+33
+34    <queries>
+34-->[androidx.camera:camera-extensions:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/4b1bd7d546a7e0e6b4708371934d3ce2/transformed/camera-extensions-1.3.1/AndroidManifest.xml:22:5-26:15
+35        <intent>
+35-->[androidx.camera:camera-extensions:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/4b1bd7d546a7e0e6b4708371934d3ce2/transformed/camera-extensions-1.3.1/AndroidManifest.xml:23:9-25:18
+36            <action android:name="androidx.camera.extensions.action.VENDOR_ACTION" />
+36-->[androidx.camera:camera-extensions:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/4b1bd7d546a7e0e6b4708371934d3ce2/transformed/camera-extensions-1.3.1/AndroidManifest.xml:24:13-86
+36-->[androidx.camera:camera-extensions:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/4b1bd7d546a7e0e6b4708371934d3ce2/transformed/camera-extensions-1.3.1/AndroidManifest.xml:24:21-83
+37        </intent>
+38    </queries>
+39
+40    <permission
+40-->[androidx.core:core:1.12.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/05365192e8c93a127ae620124358980f/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
+41        android:name="com.moodcam.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+41-->[androidx.core:core:1.12.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/05365192e8c93a127ae620124358980f/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
+42        android:protectionLevel="signature" />
+42-->[androidx.core:core:1.12.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/05365192e8c93a127ae620124358980f/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
+43
+44    <uses-permission android:name="com.moodcam.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+44-->[androidx.core:core:1.12.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/05365192e8c93a127ae620124358980f/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
+44-->[androidx.core:core:1.12.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/05365192e8c93a127ae620124358980f/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
+45
+46    <application
+46-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:20:5-41:19
+47        android:name="com.moodcam.MoodCamApplication"
+47-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:21:9-43
+48        android:allowBackup="true"
+48-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:22:9-35
+49        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+49-->[androidx.core:core:1.12.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/05365192e8c93a127ae620124358980f/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
+50        android:debuggable="true"
+51        android:extractNativeLibs="false"
+52        android:icon="@mipmap/ic_launcher"
+52-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:23:9-43
+53        android:label="@string/app_name"
+53-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:24:9-41
+54        android:roundIcon="@mipmap/ic_launcher_round"
+54-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:25:9-54
+55        android:supportsRtl="true"
+55-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:26:9-35
+56        android:testOnly="true"
+57        android:theme="@style/Theme.MoodCam" >
+57-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:27:9-45
+58        <activity
+58-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:29:9-39:20
+59            android:name="com.moodcam.MainActivity"
+59-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:30:13-41
+60            android:exported="true"
+60-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:31:13-36
+61            android:screenOrientation="portrait"
+61-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:32:13-49
+62            android:theme="@style/Theme.MoodCam"
+62-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:34:13-49
+63            android:windowSoftInputMode="adjustResize" >
+63-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:33:13-55
+64            <intent-filter>
+64-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:35:13-38:29
+65                <action android:name="android.intent.action.MAIN" />
+65-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:36:17-69
+65-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:36:25-66
+66
+67                <category android:name="android.intent.category.LAUNCHER" />
+67-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:37:17-77
+67-->/Users/alessandrosaracino/GIT/moodcam2/app/src/main/AndroidManifest.xml:37:27-74
+68            </intent-filter>
+69        </activity>
+70
+71        <uses-library
+71-->[androidx.camera:camera-extensions:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/4b1bd7d546a7e0e6b4708371934d3ce2/transformed/camera-extensions-1.3.1/AndroidManifest.xml:29:9-31:40
+72            android:name="androidx.camera.extensions.impl"
+72-->[androidx.camera:camera-extensions:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/4b1bd7d546a7e0e6b4708371934d3ce2/transformed/camera-extensions-1.3.1/AndroidManifest.xml:30:13-59
+73            android:required="false" />
+73-->[androidx.camera:camera-extensions:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/4b1bd7d546a7e0e6b4708371934d3ce2/transformed/camera-extensions-1.3.1/AndroidManifest.xml:31:13-37
+74
+75        <service
+75-->[androidx.camera:camera-camera2:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/6fb5de74ac9ddd2d495fc0781237bfaa/transformed/camera-camera2-1.3.1/AndroidManifest.xml:24:9-33:19
+76            android:name="androidx.camera.core.impl.MetadataHolderService"
+76-->[androidx.camera:camera-camera2:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/6fb5de74ac9ddd2d495fc0781237bfaa/transformed/camera-camera2-1.3.1/AndroidManifest.xml:25:13-75
+77            android:enabled="false"
+77-->[androidx.camera:camera-camera2:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/6fb5de74ac9ddd2d495fc0781237bfaa/transformed/camera-camera2-1.3.1/AndroidManifest.xml:26:13-36
+78            android:exported="false" >
+78-->[androidx.camera:camera-camera2:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/6fb5de74ac9ddd2d495fc0781237bfaa/transformed/camera-camera2-1.3.1/AndroidManifest.xml:27:13-37
+79            <meta-data
+79-->[androidx.camera:camera-camera2:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/6fb5de74ac9ddd2d495fc0781237bfaa/transformed/camera-camera2-1.3.1/AndroidManifest.xml:30:13-32:89
+80                android:name="androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER"
+80-->[androidx.camera:camera-camera2:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/6fb5de74ac9ddd2d495fc0781237bfaa/transformed/camera-camera2-1.3.1/AndroidManifest.xml:31:17-103
+81                android:value="androidx.camera.camera2.Camera2Config$DefaultProvider" />
+81-->[androidx.camera:camera-camera2:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/6fb5de74ac9ddd2d495fc0781237bfaa/transformed/camera-camera2-1.3.1/AndroidManifest.xml:32:17-86
+82        </service>
+83
+84        <activity
+84-->[androidx.compose.ui:ui-test-manifest:1.6.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/b6a4a04dec6a2ade901d2bea50b91ff7/transformed/ui-test-manifest-1.6.0/AndroidManifest.xml:23:9-25:39
+85            android:name="androidx.activity.ComponentActivity"
+85-->[androidx.compose.ui:ui-test-manifest:1.6.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/b6a4a04dec6a2ade901d2bea50b91ff7/transformed/ui-test-manifest-1.6.0/AndroidManifest.xml:24:13-63
+86            android:exported="true" />
+86-->[androidx.compose.ui:ui-test-manifest:1.6.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/b6a4a04dec6a2ade901d2bea50b91ff7/transformed/ui-test-manifest-1.6.0/AndroidManifest.xml:25:13-36
+87        <activity
+87-->[androidx.compose.ui:ui-tooling-android:1.6.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/667d3c761dcaee98a2fe1fb7262750e7/transformed/ui-tooling-release/AndroidManifest.xml:23:9-25:39
+88            android:name="androidx.compose.ui.tooling.PreviewActivity"
+88-->[androidx.compose.ui:ui-tooling-android:1.6.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/667d3c761dcaee98a2fe1fb7262750e7/transformed/ui-tooling-release/AndroidManifest.xml:24:13-71
+89            android:exported="true" />
+89-->[androidx.compose.ui:ui-tooling-android:1.6.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/667d3c761dcaee98a2fe1fb7262750e7/transformed/ui-tooling-release/AndroidManifest.xml:25:13-36
+90
+91        <provider
+91-->[androidx.emoji2:emoji2:1.3.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/b6f178862473c4a857126cf1f271810c/transformed/emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+92            android:name="androidx.startup.InitializationProvider"
+92-->[androidx.emoji2:emoji2:1.3.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/b6f178862473c4a857126cf1f271810c/transformed/emoji2-1.3.0/AndroidManifest.xml:25:13-67
+93            android:authorities="com.moodcam.androidx-startup"
+93-->[androidx.emoji2:emoji2:1.3.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/b6f178862473c4a857126cf1f271810c/transformed/emoji2-1.3.0/AndroidManifest.xml:26:13-68
+94            android:exported="false" >
+94-->[androidx.emoji2:emoji2:1.3.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/b6f178862473c4a857126cf1f271810c/transformed/emoji2-1.3.0/AndroidManifest.xml:27:13-37
+95            <meta-data
+95-->[androidx.emoji2:emoji2:1.3.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/b6f178862473c4a857126cf1f271810c/transformed/emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
+96                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+96-->[androidx.emoji2:emoji2:1.3.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/b6f178862473c4a857126cf1f271810c/transformed/emoji2-1.3.0/AndroidManifest.xml:30:17-75
+97                android:value="androidx.startup" />
+97-->[androidx.emoji2:emoji2:1.3.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/b6f178862473c4a857126cf1f271810c/transformed/emoji2-1.3.0/AndroidManifest.xml:31:17-49
+98            <meta-data
+98-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/b5aa617bebe5bc4c2ae6066dd8ccfdbb/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
+99                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+99-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/b5aa617bebe5bc4c2ae6066dd8ccfdbb/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
+100                android:value="androidx.startup" />
+100-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/alessandrosaracino/.gradle/caches/transforms-3/b5aa617bebe5bc4c2ae6066dd8ccfdbb/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+101            <meta-data
+101-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+102                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+102-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+103                android:value="androidx.startup" />
+103-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+104        </provider>
+105
+106        <service
+106-->[androidx.room:room-runtime:2.6.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/c2cd43fde83dd9a1a88da93eb036147e/transformed/room-runtime-2.6.1/AndroidManifest.xml:24:9-28:63
+107            android:name="androidx.room.MultiInstanceInvalidationService"
+107-->[androidx.room:room-runtime:2.6.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/c2cd43fde83dd9a1a88da93eb036147e/transformed/room-runtime-2.6.1/AndroidManifest.xml:25:13-74
+108            android:directBootAware="true"
+108-->[androidx.room:room-runtime:2.6.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/c2cd43fde83dd9a1a88da93eb036147e/transformed/room-runtime-2.6.1/AndroidManifest.xml:26:13-43
+109            android:exported="false" />
+109-->[androidx.room:room-runtime:2.6.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/c2cd43fde83dd9a1a88da93eb036147e/transformed/room-runtime-2.6.1/AndroidManifest.xml:27:13-37
+110
+111        <receiver
+111-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+112            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+112-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+113            android:directBootAware="false"
+113-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+114            android:enabled="true"
+114-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+115            android:exported="true"
+115-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+116            android:permission="android.permission.DUMP" >
+116-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+117            <intent-filter>
+117-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+118                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+118-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+118-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+119            </intent-filter>
+120            <intent-filter>
+120-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+121                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+121-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+121-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+122            </intent-filter>
+123            <intent-filter>
+123-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+124                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+124-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+124-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+125            </intent-filter>
+126            <intent-filter>
+126-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+127                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+127-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+127-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/alessandrosaracino/.gradle/caches/transforms-3/884614ab9cce7ddf37eb57f84fec028a/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
+128            </intent-filter>
+129        </receiver>
+130    </application>
+131
+132</manifest>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MoodCam</string>
+    
+    <!-- Camera UI -->
+    <string name="shutter_button">Take Photo</string>
+    <string name="switch_camera">Switch Camera</string>
+    <string name="film_library">Film Library</string>
+    <string name="flash_toggle">Toggle Flash</string>
+    
+    <!-- Film Library -->
+    <string name="library_title">Film Rolls</string>
+    <string name="preset_builtin">Built-in</string>
+    <string name="preset_custom">Custom</string>
+    <string name="preset_duplicate">Duplicate</string>
+    <string name="preset_edit">Edit</string>
+    <string name="preset_delete">Delete</string>
+    <string name="create_preset">Create New</string>
+    
+    <!-- Editor -->
+    <string name="editor_title">Edit Preset</string>
+    <string name="tab_base">Base</string>
+    <string name="tab_wb">White Balance</string>
+    <string name="tab_curves">Curves</string>
+    <string name="tab_grain">Grain</string>
+    <string name="tab_effects">Effects</string>
+    
+    <string name="param_exposure">Exposure</string>
+    <string name="param_contrast">Contrast</string>
+    <string name="param_fade">Fade</string>
+    <string name="param_saturation">Saturation</string>
+    <string name="param_vibrance">Vibrance</string>
+    <string name="param_temperature">Temperature</string>
+    <string name="param_tint">Tint</string>
+    <string name="param_grain_strength">Strength</string>
+    <string name="param_grain_size">Size</string>
+    <string name="param_grain_clumping">Clumping</string>
+    <string name="param_vignette">Vignette</string>
+    
+    <string name="curve_luma">Luma</string>
+    <string name="curve_red">Red</string>
+    <string name="curve_green">Green</string>
+    <string name="curve_blue">Blue</string>
+    <string name="curve_reset">Reset</string>
+    
+    <string name="btn_save">Save</string>
+    <string name="btn_reset">Reset</string>
+    <string name="btn_save_as_new">Save as New</string>
+    <string name="btn_cancel">Cancel</string>
+    
+    <!-- Permissions -->
+    <string name="permission_camera_title">Camera Permission</string>
+    <string name="permission_camera_rationale">MoodCam needs camera access to take photos with film effects.</string>
+    <string name="permission_denied">Permission denied. Please enable in Settings.</string>
+    
+    <!-- Messages -->
+    <string name="photo_saved">Photo saved</string>
+    <string name="photo_save_error">Failed to save photo</string>
+    <string name="preset_saved">Preset saved</string>
+    <string name="preset_deleted">Preset deleted</string>
+    
+    <!-- Preset Tags -->
+    <string name="tag_warm">Warm</string>
+    <string name="tag_cool">Cool</string>
+    <string name="tag_faded">Faded</string>
+    <string name="tag_contrast">Contrast</string>
+    <string name="tag_natural">Natural</string>
+    <string name="tag_vintage">Vintage</string>
+    <string name="tag_cinematic">Cinematic</string>
+</resources>

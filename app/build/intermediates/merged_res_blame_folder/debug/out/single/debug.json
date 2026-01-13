@@ -1,0 +1,82 @@
+[
+    {
+        "merged": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-merged_res-68:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-main-70:/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-merged_res-68:/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-main-70:/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-merged_res-68:/drawable_ic_effects.png.flat",
+        "source": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-main-70:/drawable/ic_effects.png"
+    },
+    {
+        "merged": "com.moodcam.app-merged_res-68:/drawable_film_pro_neg_hi.png.flat",
+        "source": "com.moodcam.app-main-70:/drawable/film_pro_neg_hi.png"
+    },
+    {
+        "merged": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-merged_res-68:/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-main-70:/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-merged_res-68:/drawable_film_astia.png.flat",
+        "source": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-main-70:/drawable/film_astia.png"
+    },
+    {
+        "merged": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-merged_res-68:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-main-70:/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-merged_res-68:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-main-70:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-merged_res-68:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-main-70:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-merged_res-68:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-main-70:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.moodcam.app-merged_res-68:/drawable_film_pro_neg_std.png.flat",
+        "source": "com.moodcam.app-main-70:/drawable/film_pro_neg_std.png"
+    },
+    {
+        "merged": "com.moodcam.app-merged_res-68:/drawable_film_provia.png.flat",
+        "source": "com.moodcam.app-main-70:/drawable/film_provia.png"
+    },
+    {
+        "merged": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-merged_res-68:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-main-70:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-merged_res-68:/drawable_film_nostalgic_neg.png.flat",
+        "source": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-main-70:/drawable/film_nostalgic_neg.png"
+    },
+    {
+        "merged": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-merged_res-68:/drawable_film_mono.png.flat",
+        "source": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-main-70:/drawable/film_mono.png"
+    },
+    {
+        "merged": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-merged_res-68:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-main-70:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-merged_res-68:/drawable_film_acros.png.flat",
+        "source": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-main-70:/drawable/film_acros.png"
+    },
+    {
+        "merged": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-merged_res-68:/drawable_film_classic_neg.png.flat",
+        "source": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-main-70:/drawable/film_classic_neg.png"
+    },
+    {
+        "merged": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-merged_res-68:/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-main-70:/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-merged_res-68:/drawable_ic_launcher_foreground.png.flat",
+        "source": "/Users/alessandrosaracino/.gradle/daemon/8.5/com.moodcam.app-main-70:/drawable/ic_launcher_foreground.png"
+    }
+]

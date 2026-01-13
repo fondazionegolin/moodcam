@@ -1,0 +1,1206 @@
+[
+  {
+    "id": "fuji-provia",
+    "name": "PROVIA",
+    "type": "builtin",
+    "version": 1,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 6500,
+      "tint": 0.0,
+      "saturation": 1.0,
+      "vibrance": 0.0,
+      "fade": 0.0,
+      "contrast": 1.0,
+      "highlights": 0.0,
+      "midtones": 0.0,
+      "shadows": 0.0,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.15,
+        "size": 1.0,
+        "clumping": 0.3,
+        "toneMode": "MID"
+      },
+      "effects": {
+        "vignette": 0.0
+      }
+    }
+  },
+  {
+    "id": "fuji-velvia",
+    "name": "Velvia",
+    "type": "builtin",
+    "version": 1,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 6500,
+      "tint": 0.0,
+      "saturation": 1.10,
+      "vibrance": 0.05,
+      "fade": 0.0,
+      "contrast": 1.02,
+      "highlights": 0.0,
+      "midtones": 0.0,
+      "shadows": 0.0,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.12,
+        "size": 0.9,
+        "clumping": 0.3,
+        "toneMode": "MID"
+      },
+      "effects": {
+        "vignette": 0.0
+      }
+    }
+  },
+  {
+    "id": "fuji-astia",
+    "name": "ASTIA",
+    "type": "builtin",
+    "version": 1,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 6500,
+      "tint": 0.0,
+      "saturation": 1.0,
+      "vibrance": 0.0,
+      "fade": 0.0,
+      "contrast": 0.98,
+      "highlights": 0.0,
+      "midtones": 0.0,
+      "shadows": 0.0,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.10,
+        "size": 1.0,
+        "clumping": 0.3,
+        "toneMode": "MID"
+      },
+      "effects": {
+        "vignette": 0.0
+      }
+    }
+  },
+  {
+    "id": "fuji-classic-chrome",
+    "name": "Classic Chrome",
+    "type": "builtin",
+    "version": 1,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 6500,
+      "tint": 0.0,
+      "saturation": 0.90,
+      "vibrance": 0.0,
+      "fade": 0.0,
+      "contrast": 1.0,
+      "highlights": 0.0,
+      "midtones": 0.0,
+      "shadows": 0.0,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.15,
+        "size": 1.0,
+        "clumping": 0.35,
+        "toneMode": "MID"
+      },
+      "effects": {
+        "vignette": 0.0
+      }
+    }
+  },
+  {
+    "id": "fuji-classic-neg",
+    "name": "Classic Neg",
+    "type": "builtin",
+    "version": 1,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 6500,
+      "tint": 0.0,
+      "saturation": 0.95,
+      "vibrance": 0.0,
+      "fade": 0.0,
+      "contrast": 1.0,
+      "highlights": 0.0,
+      "midtones": 0.0,
+      "shadows": 0.0,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.18,
+        "size": 1.1,
+        "clumping": 0.4,
+        "toneMode": "MID"
+      },
+      "effects": {
+        "vignette": 0.0
+      }
+    }
+  },
+  {
+    "id": "fuji-pro-neg-hi",
+    "name": "PRO Neg Hi",
+    "type": "builtin",
+    "version": 1,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 6500,
+      "tint": 0.0,
+      "saturation": 0.95,
+      "vibrance": 0.0,
+      "fade": 0.0,
+      "contrast": 1.0,
+      "highlights": 0.0,
+      "midtones": 0.0,
+      "shadows": 0.0,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.10,
+        "size": 1.0,
+        "clumping": 0.3,
+        "toneMode": "MID"
+      },
+      "effects": {
+        "vignette": 0.0
+      }
+    }
+  },
+  {
+    "id": "fuji-pro-neg-std",
+    "name": "PRO Neg Std",
+    "type": "builtin",
+    "version": 1,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 6500,
+      "tint": 0.0,
+      "saturation": 0.92,
+      "vibrance": 0.0,
+      "fade": 0.0,
+      "contrast": 0.98,
+      "highlights": 0.0,
+      "midtones": 0.0,
+      "shadows": 0.0,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.08,
+        "size": 1.0,
+        "clumping": 0.3,
+        "toneMode": "MID"
+      },
+      "effects": {
+        "vignette": 0.0
+      }
+    }
+  },
+  {
+    "id": "fuji-nostalgic-neg",
+    "name": "Nostalgic Neg",
+    "type": "builtin",
+    "version": 1,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 6200,
+      "tint": 0.0,
+      "saturation": 0.92,
+      "vibrance": 0.0,
+      "fade": 0.0,
+      "contrast": 0.98,
+      "highlights": 0.0,
+      "midtones": 0.0,
+      "shadows": 0.0,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.20,
+        "size": 1.2,
+        "clumping": 0.45,
+        "toneMode": "MID"
+      },
+      "effects": {
+        "vignette": 0.0
+      }
+    }
+  },
+  {
+    "id": "fuji-eterna",
+    "name": "ETERNA",
+    "type": "builtin",
+    "version": 1,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 6500,
+      "tint": 0.0,
+      "saturation": 0.85,
+      "vibrance": 0.0,
+      "fade": 0.0,
+      "contrast": 0.95,
+      "highlights": 0.0,
+      "midtones": 0.0,
+      "shadows": 0.0,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.12,
+        "size": 0.9,
+        "clumping": 0.3,
+        "toneMode": "SHADOW"
+      },
+      "effects": {
+        "vignette": 0.0
+      }
+    }
+  },
+  {
+    "id": "fuji-eterna-bleach",
+    "name": "ETERNA Bleach",
+    "type": "builtin",
+    "version": 1,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 6500,
+      "tint": 0.0,
+      "saturation": 0.60,
+      "vibrance": 0.0,
+      "fade": 0.0,
+      "contrast": 1.05,
+      "highlights": 0.0,
+      "midtones": 0.0,
+      "shadows": 0.0,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.15,
+        "size": 1.0,
+        "clumping": 0.35,
+        "toneMode": "MID"
+      },
+      "effects": {
+        "vignette": 0.0
+      }
+    }
+  },
+  {
+    "id": "fuji-acros",
+    "name": "ACROS",
+    "type": "builtin",
+    "version": 1,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 6500,
+      "tint": 0.0,
+      "saturation": 0.0,
+      "vibrance": 0.0,
+      "fade": 0.0,
+      "contrast": 1.0,
+      "highlights": 0.0,
+      "midtones": 0.0,
+      "shadows": 0.0,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.20,
+        "size": 0.8,
+        "clumping": 0.35,
+        "toneMode": "MID"
+      },
+      "effects": {
+        "vignette": 0.0
+      }
+    }
+  },
+  {
+    "id": "fuji-mono",
+    "name": "Mono",
+    "type": "builtin",
+    "version": 1,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 6500,
+      "tint": 0.0,
+      "saturation": 0.0,
+      "vibrance": 0.0,
+      "fade": 0.0,
+      "contrast": 1.0,
+      "highlights": 0.0,
+      "midtones": 0.0,
+      "shadows": 0.0,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.15,
+        "size": 1.0,
+        "clumping": 0.35,
+        "toneMode": "MID"
+      },
+      "effects": {
+        "vignette": 0.0
+      }
+    }
+  },
+  {
+    "id": "fuji-reala-ace",
+    "name": "REALA ACE",
+    "type": "builtin",
+    "version": 1,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 6500,
+      "tint": 0.0,
+      "saturation": 1.0,
+      "vibrance": 0.0,
+      "fade": 0.0,
+      "contrast": 1.0,
+      "highlights": 0.0,
+      "midtones": 0.0,
+      "shadows": 0.0,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.08,
+        "size": 1.0,
+        "clumping": 0.3,
+        "toneMode": "MID"
+      },
+      "effects": {
+        "vignette": 0.0
+      }
+    }
+  },
+  {
+    "id": "fuji-sepia",
+    "name": "Sepia",
+    "type": "builtin",
+    "version": 1,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 5800,
+      "tint": 0.05,
+      "saturation": 0.25,
+      "vibrance": 0.0,
+      "fade": 0.0,
+      "contrast": 1.0,
+      "highlights": 0.0,
+      "midtones": 0.0,
+      "shadows": 0.0,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            0.5
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.22,
+        "size": 1.2,
+        "clumping": 0.45,
+        "toneMode": "MID"
+      },
+      "effects": {
+        "vignette": 0.0
+      }
+    }
+  }
+]
