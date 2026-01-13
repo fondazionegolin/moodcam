@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - MoodCam</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">◎</span>
+                <span class="logo-text">MoodCam</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html" class="active">Gallery</a></li>
+                <li><a href="profiles.html">Film Profiles</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Gallery Page -->
+    <main class="gallery-page">
+        <div class="gallery-header">
+            <h1 class="section-title">Community Gallery</h1>
+            <p class="section-subtitle">Photos shared by MoodCam photographers around the world</p>
+        </div>
+
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Photos loaded dynamically -->
+            <div class="loading">
+                <div class="spinner"></div>
+            </div>
+        </div>
+
+        <div class="load-more-container" style="text-align: center; padding: 2rem;">
+            <button class="btn btn-secondary" id="loadMoreBtn" style="display: none;">
+                Load More
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">◎</span>
+                    <span>MoodCam</span>
+                </div>
+                <div class="footer-links">
+                    <a href="gallery.html">Gallery</a>
+                    <a href="profiles.html">Film Profiles</a>
+                    <a href="mailto:hello@moodcam.app">Contact</a>
+                </div>
+                <p class="footer-copyright">© 2024 MoodCam. Made with ❤️ for film lovers.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // API Configuration
+        const API_BASE = 'http://localhost:3000/api';
+
+        let currentPage = 1;
+        const photosPerPage = 12;
+        let hasMore = true;
+
+        // Load gallery photos
+        async function loadPhotos(page = 1) {
+            const grid = document.getElementById('galleryGrid');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+
+            if (page === 1) {
+                grid.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/photos?page=${page}&limit=${photosPerPage}`);
+                const data = await response.json();
+
+                if (page === 1) {
+                    grid.innerHTML = '';
+                }
+
+                if (data.photos && data.photos.length > 0) {
+                    data.photos.forEach(photo => {
+                        grid.appendChild(createPhotoCard(photo));
+                    });
+
+                    hasMore = data.hasMore;
+                    loadMoreBtn.style.display = hasMore ? 'inline-flex' : 'none';
+                } else if (page === 1) {
+                    grid.innerHTML = `
+                        <div style="grid-column: 1/-1; text-align: center; padding: 4rem; color: var(--brown);">
+                            <p style="font-size: 1.2rem;">No photos yet!</p>
+                            <p style="opacity: 0.7;">Be the first to share from the MoodCam app.</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading photos:', error);
+                if (page === 1) {
+                    grid.innerHTML = `
+                        <div style="grid-column: 1/-1; text-align: center; padding: 4rem; color: var(--brown);">
+                            <p style="font-size: 1.2rem;">Gallery coming soon!</p>
+                            <p style="opacity: 0.7;">Share photos from the MoodCam app.</p>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // Create photo card element
+        function createPhotoCard(photo) {
+            const card = document.createElement('div');
+            card.className = 'gallery-item';
+
+            // Format date
+            const date = new Date(photo.timestamp);
+            const dateStr = date.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            });
+
+            card.innerHTML = `
+                <img src="${photo.imageUrl}" alt="Photo by ${photo.username}" loading="lazy">
+                <div class="gallery-item-meta">
+                    <div class="meta-line">
+                        <span>${photo.device || 'Unknown Device'}</span>
+                        <span class="meta-separator">•</span>
+                        <span>${dateStr}</span>
+                        <span class="meta-separator">•</span>
+                        <span>${photo.filter || 'No Filter'}</span>
+                        <span class="meta-separator">•</span>
+                        <span>@${photo.username}</span>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Load more button handler
+        document.getElementById('loadMoreBtn').addEventListener('click', () => {
+            currentPage++;
+            loadPhotos(currentPage);
+        });
+
+        // Initial load
+        loadPhotos(1);
+    </script>
+</body>
+
+</html>

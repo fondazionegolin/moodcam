@@ -756,14 +756,8 @@ fun CameraScreen(
                         .background(Color.White.copy(alpha = 0.1f))
                         .clickable {
                             hapticClick()
-                            // Open gallery to view the last photo
-                            uiState.lastPhotoUri?.let { uri ->
-                                val intent = Intent(Intent.ACTION_VIEW).apply {
-                                    setDataAndType(uri, "image/*")
-                                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                                }
-                                context.startActivity(intent)
-                            }
+                            viewModel.showGallery()
+                            viewModel.loadGalleryPhotos(context)
                         },
                     contentAlignment = Alignment.Center
                 ) {
@@ -834,6 +828,14 @@ fun CameraScreen(
                 onReset = { viewModel.resetActiveParams() },
                 onDismiss = { viewModel.cancelEditing() }
             )
+        }
+        
+        // In-App Gallery Screen
+        if (uiState.showGallery) {
+             InAppGalleryScreen(
+                 viewModel = viewModel,
+                 onClose = { viewModel.hideGallery() }
+             )
         }
     }
 }

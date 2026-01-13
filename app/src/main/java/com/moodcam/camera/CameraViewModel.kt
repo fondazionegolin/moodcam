@@ -2,6 +2,10 @@ package com.moodcam.camera
 
 import android.app.Application
 import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.moodcam.MoodCamApplication
@@ -9,6 +13,7 @@ import com.moodcam.export.PhotoExporter
 import com.moodcam.preset.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.io.File
 
 /**
  * ViewModel managing camera state and preset selection.
@@ -27,6 +32,10 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
     // UI State
     private val _uiState = MutableStateFlow(CameraUiState())
     val uiState: StateFlow<CameraUiState> = _uiState.asStateFlow()
+    
+    // Gallery photos
+    private val _galleryPhotos = MutableStateFlow<List<Uri>>(emptyList())
+    val galleryPhotos: StateFlow<List<Uri>> = _galleryPhotos.asStateFlow()
     
     // All presets (built-in + custom)
     val allPresets: StateFlow<List<FilmPreset>> = presetRepository.getAllPresetsFlow()
@@ -369,6 +378,81 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
     fun cancelImport() {
         _uiState.update { it.copy(showImportPicker = false) }
     }
+    
+    /**
+     * Show/Hide In-App Gallery
+     */
+    fun showGallery() {
+        _uiState.update { it.copy(showGallery = true) }
+    }
+    
+    fun hideGallery() {
+        _uiState.update { it.copy(showGallery = false) }
+    }
+    
+    /**
+     * Load recent photos from MoodCam folder or MediaStore
+     */
+    fun loadGalleryPhotos(context: android.content.Context) {
+        viewModelScope.launch(kotlinx.coroutines.Dispatchers.IO) {
+            val photos = mutableListOf<Uri>()
+            
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                // Query MediaStore for images with description "Preset: ..." or path containing MoodCam
+                val projection = arrayOf(
+                    MediaStore.Images.Media._ID,
+                    MediaStore.Images.Media.DISPLAY_NAME,
+                    MediaStore.Images.Media.DATE_TAKEN
+                )
+                
+                val selection = "${MediaStore.Images.Media.DISPLAY_NAME} LIKE ?"
+                val selectionArgs = arrayOf("MOODCAM_%")
+                val sortOrder = "${MediaStore.Images.Media.DATE_TAKEN} DESC"
+                
+                try {
+                    context.contentResolver.query(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        sortOrder
+                    )?.use { cursor ->
+                        val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+                        while (cursor.moveToNext()) {
+                            val id = cursor.getLong(idColumn)
+                            val contentUri = android.content.ContentUris.withAppendedId(
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                                id
+                            )
+                            photos.add(contentUri)
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            } else {
+                // Legacy storage scan
+                try {
+                    val picturesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                    val moodcamDir = File(picturesDir, "MoodCam")
+                    
+                    if (moodcamDir.exists() && moodcamDir.isDirectory) {
+                        val files = moodcamDir.listFiles { file -> 
+                            file.isFile && (file.name.endsWith(".jpg") || file.name.endsWith(".jpeg"))
+                        }
+                        
+                        files?.sortedByDescending { it.lastModified() }?.forEach { file ->
+                            photos.add(Uri.fromFile(file))
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+            
+            _galleryPhotos.value = photos
+        }
+    }
 }
 
 /**
@@ -386,6 +470,8 @@ data class CameraUiState(
     // Last captured photo URI for thumbnail preview
     val lastPhotoUri: android.net.Uri? = null,
     // Import file picker visibility
-    val showImportPicker: Boolean = false
+    val showImportPicker: Boolean = false,
+    // In-app gallery visibility
+    val showGallery: Boolean = false
 )
 

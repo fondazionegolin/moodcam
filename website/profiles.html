@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film Profiles - MoodCam</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">◎</span>
+                <span class="logo-text">MoodCam</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="profiles.html" class="active">Film Profiles</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Profiles Page -->
+    <main class="profiles-page">
+        <div class="profiles-header">
+            <h1 class="section-title">Film Profiles</h1>
+            <p class="section-subtitle">Download custom film presets created by the community</p>
+            <p style="color: var(--brown); opacity: 0.8; margin-top: 0.5rem;">
+                📱 Opening on mobile? Profiles will be imported automatically into MoodCam!
+            </p>
+        </div>
+
+        <div class="profiles-grid" id="profilesGrid">
+            <!-- Profiles loaded dynamically -->
+            <div class="loading">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">◎</span>
+                    <span>MoodCam</span>
+                </div>
+                <div class="footer-links">
+                    <a href="gallery.html">Gallery</a>
+                    <a href="profiles.html">Film Profiles</a>
+                    <a href="mailto:hello@moodcam.app">Contact</a>
+                </div>
+                <p class="footer-copyright">© 2024 MoodCam. Made with ❤️ for film lovers.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // API Configuration
+        const API_BASE = 'http://localhost:3000/api';
+
+        // Detect if mobile
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+        // Load profiles
+        async function loadProfiles() {
+            const grid = document.getElementById('profilesGrid');
+
+            try {
+                const response = await fetch(`${API_BASE}/profiles`);
+                const data = await response.json();
+
+                grid.innerHTML = '';
+
+                if (data.profiles && data.profiles.length > 0) {
+                    data.profiles.forEach(profile => {
+                        grid.appendChild(createProfileCard(profile));
+                    });
+                } else {
+                    showDefaultProfiles(grid);
+                }
+            } catch (error) {
+                console.error('Error loading profiles:', error);
+                showDefaultProfiles(grid);
+            }
+        }
+
+        // Show default built-in profiles when API not available
+        function showDefaultProfiles(grid) {
+            const defaultProfiles = [
+                { id: 'provia', name: 'Provia 100F', description: 'Natural colors with subtle saturation. Perfect for everyday photography.', tags: ['Natural', 'Subtle'] },
+                { id: 'velvia', name: 'Velvia 50', description: 'Vivid, saturated colors. Ideal for landscapes and nature.', tags: ['Vivid', 'Saturated'] },
+                { id: 'portra400', name: 'Portra 400', description: 'Warm skin tones with beautiful highlight rolloff. Portrait favorite.', tags: ['Portrait', 'Warm'] },
+                { id: 'ektar', name: 'Ektar 100', description: 'Punchy colors with fine grain. Great for travel and street.', tags: ['Punchy', 'Fine Grain'] },
+                { id: 'classic_chrome', name: 'Classic Chrome', description: 'Muted tones reminiscent of vintage magazines.', tags: ['Vintage', 'Muted'] },
+                { id: 'astia', name: 'Astia Soft', description: 'Soft gradations perfect for portraits and studio work.', tags: ['Soft', 'Portrait'] },
+            ];
+
+            grid.innerHTML = '';
+            defaultProfiles.forEach(profile => {
+                grid.appendChild(createProfileCard(profile));
+            });
+        }
+
+        // Create profile card element
+        function createProfileCard(profile) {
+            const card = document.createElement('div');
+            card.className = 'profile-card';
+
+            const tags = profile.tags ? profile.tags.map(t => `<span class="profile-tag">${t}</span>`).join('') : '';
+
+            card.innerHTML = `
+                <div class="profile-preview">
+                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, hsl(${Math.random() * 60 + 20}, 40%, 60%), hsl(${Math.random() * 60 + 20}, 50%, 40%));"></div>
+                </div>
+                <div class="profile-info">
+                    <h3 class="profile-name">${profile.name}</h3>
+                    <p class="profile-description">${profile.description || ''}</p>
+                    <div class="profile-tags">${tags}</div>
+                    <button class="profile-download" onclick="downloadProfile('${profile.id}', '${profile.name}')">
+                        ${isMobile ? '📲 Import to MoodCam' : '⬇️ Download Profile'}
+                    </button>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Download or import profile
+        async function downloadProfile(profileId, profileName) {
+            if (isMobile) {
+                // On mobile, try to open deep link to MoodCam app
+                const deepLink = `moodcam://profile/${profileId}`;
+
+                // Try to open app
+                window.location.href = deepLink;
+
+                // Fallback after delay - if app not installed, show message
+                setTimeout(() => {
+                    if (confirm(`MoodCam app not found. Would you like to download the profile JSON instead?`)) {
+                        downloadProfileFile(profileId, profileName);
+                    }
+                }, 2000);
+            } else {
+                // On desktop, download JSON file
+                downloadProfileFile(profileId, profileName);
+            }
+        }
+
+        // Download profile as JSON file
+        async function downloadProfileFile(profileId, profileName) {
+            try {
+                const response = await fetch(`${API_BASE}/profiles/${profileId}`);
+                const profile = await response.json();
+
+                const blob = new Blob([JSON.stringify(profile, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${profileName.replace(/\s+/g, '_')}_preset.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error('Error downloading profile:', error);
+                alert('Could not download profile. Try again later.');
+            }
+        }
+
+        // Initial load
+        loadProfiles();
+    </script>
+</body>
+
+</html>

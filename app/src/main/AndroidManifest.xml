@@ -11,6 +11,9 @@
     
     <!-- Haptic feedback -->
     <uses-permission android:name="android.permission.VIBRATE" />
+    
+    <!-- Internet for gallery uploads -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- Hardware features -->
     <uses-feature android:name="android.hardware.camera" android:required="true" />
@@ -35,6 +38,14 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            
+            <!-- Deep link for importing profiles -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="moodcam" android:host="profile" />
             </intent-filter>
         </activity>
         

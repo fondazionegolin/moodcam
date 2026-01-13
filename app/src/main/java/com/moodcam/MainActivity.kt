@@ -62,6 +62,10 @@ class MainActivity : ComponentActivity() {
             Manifest.permission.CAMERA
         ) == PackageManager.PERMISSION_GRANTED
         
+        
+        // Handle deep link if present
+        handleDeepLink(intent)
+        
         setContent {
             MoodCamTheme {
                 Surface(
@@ -70,6 +74,24 @@ class MainActivity : ComponentActivity() {
                 ) {
                     if (hasPermission) {
                         val viewModel: CameraViewModel = viewModel()
+                        
+                        // Handle deep link intent updates
+                        DisposableEffect(Unit) {
+                            val consumer = androidx.core.util.Consumer<android.content.Intent> { intent ->
+                                handleDeepLink(intent, viewModel)
+                            }
+                            addOnNewIntentListener(consumer)
+                            onDispose { removeOnNewIntentListener(consumer) }
+                        }
+                        
+                        // Check for pending profile import from onCreate
+                        LaunchedEffect(pendingProfileId) {
+                            pendingProfileId?.let { id ->
+                                importProfile(id, viewModel)
+                                pendingProfileId = null
+                            }
+                        }
+                        
                         CameraScreen(viewModel = viewModel)
                     } else {
                         PermissionScreen(
@@ -81,5 +103,52 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+    
+    private var pendingProfileId: String? = null
+    
+    // TODO: Update with your server URL
+    private val API_BASE = "https://moodcam.golinelli.ai/api"
+    
+    private fun handleDeepLink(intent: android.content.Intent, viewModel: CameraViewModel? = null) {
+        if (intent.action == android.content.Intent.ACTION_VIEW) {
+            val data = intent.data
+            if (data != null && data.scheme == "moodcam" && data.host == "profile") {
+                val profileId = data.lastPathSegment
+                if (!profileId.isNullOrEmpty()) {
+                    if (viewModel != null) {
+                        importProfile(profileId, viewModel)
+                    } else {
+                        pendingProfileId = profileId
+                    }
+                }
+            }
+        }
+    }
+    
+    private fun importProfile(profileId: String, viewModel: CameraViewModel) {
+        // Fetch profile JSON from server
+        val client = okhttp3.OkHttpClient()
+        val request = okhttp3.Request.Builder()
+            .url("$API_BASE/profiles/$profileId")
+            .build()
+            
+        // Run in background
+        Thread {
+            try {
+                val response = client.newCall(request).execute()
+                if (response.isSuccessful) {
+                    val jsonContent = response.body?.string()
+                    if (jsonContent != null) {
+                        // Import specifically from deep link
+                        runOnUiThread {
+                            viewModel.handleImportedPreset(jsonContent)
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }.start()
     }
 }

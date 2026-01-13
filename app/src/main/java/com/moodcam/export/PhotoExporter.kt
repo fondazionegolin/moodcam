@@ -81,10 +81,7 @@ class PhotoExporter(private val context: Context) {
         try {
             resolver.openFileDescriptor(uri, "rw")?.use { pfd ->
                 val exif = ExifInterface(pfd.fileDescriptor)
-                exif.setAttribute(ExifInterface.TAG_SOFTWARE, "MoodCam")
-                exif.setAttribute(ExifInterface.TAG_IMAGE_DESCRIPTION, "Preset: $presetName")
-                exif.setAttribute(ExifInterface.TAG_DATETIME, 
-                    SimpleDateFormat("yyyy:MM:dd HH:mm:ss", Locale.US).format(Date()))
+                writeCommonExif(exif, presetName)
                 exif.saveAttributes()
             }
         } catch (e: Exception) {
@@ -121,10 +118,7 @@ class PhotoExporter(private val context: Context) {
         // Write EXIF data
         try {
             val exif = ExifInterface(file.absolutePath)
-            exif.setAttribute(ExifInterface.TAG_SOFTWARE, "MoodCam")
-            exif.setAttribute(ExifInterface.TAG_IMAGE_DESCRIPTION, "Preset: $presetName")
-            exif.setAttribute(ExifInterface.TAG_DATETIME,
-                SimpleDateFormat("yyyy:MM:dd HH:mm:ss", Locale.US).format(Date()))
+            writeCommonExif(exif, presetName)
             exif.saveAttributes()
         } catch (e: Exception) {
             Log.w(TAG, "Failed to write EXIF", e)
@@ -137,6 +131,20 @@ class PhotoExporter(private val context: Context) {
         }
         
         context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+    }
+    
+    private fun writeCommonExif(exif: ExifInterface, presetName: String) {
+        exif.setAttribute(ExifInterface.TAG_SOFTWARE, "MoodCam")
+        exif.setAttribute(ExifInterface.TAG_IMAGE_DESCRIPTION, "Preset: $presetName")
+        exif.setAttribute(ExifInterface.TAG_DATETIME, 
+            SimpleDateFormat("yyyy:MM:dd HH:mm:ss", Locale.US).format(Date()))
+        exif.setAttribute(ExifInterface.TAG_MAKE, Build.MANUFACTURER)
+        exif.setAttribute(ExifInterface.TAG_MODEL, Build.MODEL)
+        
+        // Store metadata in UserComment for backend processing
+        val username = com.moodcam.gallery.UserSettings.getUsername(context)
+        val metadata = "filter=$presetName;username=$username;device=${Build.MANUFACTURER} ${Build.MODEL}"
+        exif.setAttribute(ExifInterface.TAG_USER_COMMENT, metadata)
     }
     
     companion object {
