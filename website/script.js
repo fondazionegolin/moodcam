@@ -1,16 +1,16 @@
 // MoodCam Website Scripts
 
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = '/api';
 
 // Load gallery preview on homepage
 async function loadGalleryPreview() {
     const preview = document.getElementById('galleryPreview');
     if (!preview) return;
-    
+
     try {
         const response = await fetch(`${API_BASE}/photos?page=1&limit=6`);
         const data = await response.json();
-        
+
         if (data.photos && data.photos.length > 0) {
             preview.innerHTML = data.photos.map(photo => `
                 <div class="preview-item">
@@ -38,7 +38,7 @@ function showPlaceholderGallery(container) {
         { color: '#B8956A', username: 'street_shooter', filter: 'Provia 100F' },
         { color: '#3D2B22', username: 'night_owl', filter: 'Astia Soft' },
     ];
-    
+
     container.innerHTML = placeholders.map(p => `
         <div class="preview-item">
             <div style="width: 100%; height: 100%; background: linear-gradient(145deg, ${p.color}, ${adjustColor(p.color, -30)});"></div>
@@ -72,7 +72,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     loadGalleryPreview();
-    
+
     // Add scroll effect to navbar
     const navbar = document.querySelector('.navbar');
     window.addEventListener('scroll', () => {
