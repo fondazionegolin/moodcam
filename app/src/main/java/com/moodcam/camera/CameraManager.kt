@@ -9,6 +9,7 @@ import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager as Camera2Manager
 import android.os.Build
 import android.util.Log
+import android.util.Size
 import android.view.Surface
 import androidx.camera.core.*
 import androidx.camera.core.DisplayOrientedMeteringPointFactory
@@ -31,6 +32,19 @@ data class CameraLensInfo(
     val isFront: Boolean,
     val focalLength: Float
 )
+
+/**
+ * Capture resolution presets.
+ * Height > Width because we use portrait orientation (3:4 ratio).
+ */
+enum class CaptureResolution(val label: String, val width: Int, val height: Int) {
+    MP_12("12 MP", 3000, 4000),
+    MP_24("24 MP", 4000, 6000),   // Default - good balance
+    MP_48("48 MP", 5656, 7542),
+    MAX("MAX", 0, 0);             // Uses camera maximum
+    
+    fun toSize(): Size? = if (width > 0 && height > 0) Size(width, height) else null
+}
 
 /**
  * Manages CameraX camera operations.
@@ -60,6 +74,10 @@ class CameraManager(private val context: Context) {
     // Available cameras (for display only)
     private val _availableCameras = mutableListOf<CameraLensInfo>()
     val availableCameras: List<CameraLensInfo> get() = _availableCameras
+    
+    // Capture resolution setting
+    private var _captureResolution = CaptureResolution.MP_24
+    val captureResolution: CaptureResolution get() = _captureResolution
     
     /**
      * Initialize camera provider and extensions manager.
@@ -212,13 +230,24 @@ class CameraManager(private val context: Context) {
                 Log.d(TAG, "Binding to SurfaceTexture for GL Mode")
             }
             
-            // Configure image capture
-            imageCapture = ImageCapture.Builder()
+            // Configure image capture with target resolution
+            val captureBuilder = ImageCapture.Builder()
                 .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
-                .setTargetAspectRatio(AspectRatio.RATIO_4_3)
                 .setTargetRotation(Surface.ROTATION_0)
                 .setJpegQuality(95)
-                .build()
+            
+            // Set target resolution if not MAX
+            val targetSize = _captureResolution.toSize()
+            if (targetSize != null) {
+                captureBuilder.setTargetResolution(targetSize)
+            } else {
+                // MAX: use aspect ratio only, let camera choose highest resolution
+                captureBuilder.setTargetAspectRatio(AspectRatio.RATIO_4_3)
+            }
+            
+            imageCapture = captureBuilder.build()
+            
+            Log.d(TAG, "ImageCapture configured for ${_captureResolution.label}")
             
             // Bind
             camera = provider.bindToLifecycle(
@@ -407,6 +436,30 @@ class CameraManager(private val context: Context) {
         
         Log.d(TAG, "setZoom requested: $zoomRatio, min: $minZoom, max: $maxZoom, actual: $actualZoom")
         cameraControl.setZoomRatio(actualZoom)
+    }
+    
+    /**
+     * Set capture resolution.
+     * Requires rebind to apply.
+     */
+    fun setResolution(resolution: CaptureResolution) {
+        if (_captureResolution != resolution) {
+            _captureResolution = resolution
+            Log.d(TAG, "Resolution set to: ${resolution.label}")
+            
+            // Rebind to apply new resolution
+            if (lastLifecycleOwner != null) {
+                bindToLifecycle(lastLifecycleOwner!!)
+            }
+        }
+    }
+    
+    /**
+     * Get actual resolution from the current ImageCapture use case.
+     * Returns "WxH" string or resolution label.
+     */
+    fun getActualResolutionLabel(): String {
+        return _captureResolution.label
     }
 
     /**

@@ -37,11 +37,12 @@ import androidx.compose.foundation.pager.rememberPagerState
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.moodcam.camera.CameraViewModel
-import com.moodcam.gallery.GalleryUploadManager
-import com.moodcam.gallery.UploadResult
 import com.moodcam.gallery.UserSettings
 import kotlinx.coroutines.launch
 import java.io.File
+import androidx.compose.foundation.gestures.rememberTransformableState
+import androidx.compose.foundation.gestures.transformable
+import androidx.compose.ui.graphics.graphicsLayer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -114,33 +115,32 @@ fun InAppGalleryScreen(
                 Text("No photos yet. Go shoot some film!", color = Color.Gray)
             }
         } else {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                contentPadding = PaddingValues(
-                    start = 4.dp, 
-                    top = padding.calculateTopPadding() + 4.dp, 
-                    end = 4.dp, 
-                    bottom = 80.dp // Space for bottom bar if any
-                ),
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-                modifier = Modifier.fillMaxSize()
-            ) {
-                items(galleryPhotos) { uri ->
-                    AsyncImage(
-                        model = ImageRequest.Builder(context)
-                            .data(uri)
-                            .crossfade(true)
-                            .build(),
-                        contentDescription = "Photo",
-                        modifier = Modifier
-                            .aspectRatio(1f)
-                            .clip(RoundedCornerShape(4.dp))
-                            .aspectRatio(1f)
-                            .clip(RoundedCornerShape(4.dp))
-                            .clickable { selectedPhotoIndex = galleryPhotos.indexOf(uri) },
-                        contentScale = ContentScale.Crop
-                    )
+            Column(modifier = Modifier.fillMaxSize().padding(padding)) {
+                // Black band spacer for notch avoidance
+                Spacer(modifier = Modifier.height(32.dp).fillMaxWidth().background(Color.Black))
+                
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(3),
+                    contentPadding = PaddingValues(4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(galleryPhotos) { uri ->
+                        AsyncImage(
+                            model = ImageRequest.Builder(context)
+                                .data(uri)
+                                .crossfade(true)
+                                .allowHardware(false) // Ensures EXIF rotation is applied
+                                .build(),
+                            contentDescription = "Photo",
+                            modifier = Modifier
+                                .aspectRatio(1f)
+                                .clip(RoundedCornerShape(4.dp))
+                                .clickable { selectedPhotoIndex = galleryPhotos.indexOf(uri) },
+                            contentScale = ContentScale.Crop
+                        )
+                    }
                 }
             }
         }
@@ -156,24 +156,7 @@ fun InAppGalleryScreen(
             PhotoViewer(
                 photos = galleryPhotos,
                 initialIndex = selectedPhotoIndex,
-                onClose = { selectedPhotoIndex = -1 },
-                onUpload = { uri ->
-                    scope.launch {
-                        val manager = GalleryUploadManager(context)
-                        // In real app, get preset name from EXIF or ViewModel
-                        // For now using "Standard" as placeholder if not available
-                        val result = manager.uploadToGallery(uri, "MoodCam Standard")
-                        
-                        when (result) {
-                            is UploadResult.Success -> {
-                                Toast.makeText(context, "Uploaded to Gallery!", Toast.LENGTH_SHORT).show()
-                            }
-                            is UploadResult.Error -> {
-                                Toast.makeText(context, "Error: ${result.message}", Toast.LENGTH_LONG).show()
-                            }
-                        }
-                    }
-                }
+                onClose = { selectedPhotoIndex = -1 }
             )
         }
     }
@@ -216,10 +199,9 @@ fun InAppGalleryScreen(
 fun PhotoViewer(
     photos: List<Uri>,
     initialIndex: Int,
-    onClose: () -> Unit,
-    onUpload: (Uri) -> Unit
+    onClose: () -> Unit
 ) {
-    var isUploading by remember { mutableStateOf(false) }
+    val context = LocalContext.current
     val pagerState = rememberPagerState(initialPage = initialIndex) { photos.size }
     
     BackHandler { onClose() }
@@ -233,85 +215,52 @@ fun PhotoViewer(
             state = pagerState,
             modifier = Modifier.fillMaxSize()
         ) { page ->
+            // Pinch-to-zoom state
+            var scale by remember { mutableFloatStateOf(1f) }
+            var offsetX by remember { mutableFloatStateOf(0f) }
+            var offsetY by remember { mutableFloatStateOf(0f) }
+            
+            val transformableState = rememberTransformableState { zoomChange, panChange, _ ->
+                scale = (scale * zoomChange).coerceIn(1f, 5f)
+                if (scale > 1f) {
+                    offsetX += panChange.x
+                    offsetY += panChange.y
+                } else {
+                    offsetX = 0f
+                    offsetY = 0f
+                }
+            }
+            
             AsyncImage(
-                model = photos[page],
+                model = ImageRequest.Builder(context)
+                    .data(photos[page])
+                    .crossfade(true)
+                    .allowHardware(false)
+                    .build(),
                 contentDescription = "Full photo",
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .graphicsLayer(
+                        scaleX = scale,
+                        scaleY = scale,
+                        translationX = offsetX,
+                        translationY = offsetY
+                    )
+                    .transformable(state = transformableState),
                 contentScale = ContentScale.Fit
             )
         }
         
-        // Top Bar
-        Row(
+        // Top Bar - Close button only
+        IconButton(
+            onClick = onClose,
             modifier = Modifier
-                .fillMaxWidth()
+                .align(Alignment.TopStart)
                 .padding(16.dp)
-                .align(Alignment.TopStart),
-            horizontalArrangement = Arrangement.SpaceBetween
+                .statusBarsPadding()
+                .background(Color.Black.copy(alpha = 0.5f), RoundedCornerShape(50))
         ) {
-            IconButton(
-                onClick = onClose,
-                modifier = Modifier.background(Color.Black.copy(alpha = 0.5f), RequestConstants.IconShape)
-            ) {
-                Icon(Icons.Default.ArrowBack, "Back", tint = Color.White)
-            }
-        }
-        
-        // Bottom Actions
-        Column(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .background(Color.Black.copy(alpha = 0.7f))
-                .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Button(
-                onClick = {
-                    isUploading = true
-                    // Upload current photo
-                    if (pagerState.currentPage < photos.size) {
-                        onUpload(photos[pagerState.currentPage])
-                    }
-                    // Reset uploading state after delay/callback (simplified)
-                    ConstantScope.launch { 
-                        kotlinx.coroutines.delay(2000)
-                        isUploading = false
-                    }
-                },
-                enabled = !isUploading,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFA0522D) // Rust color
-                ),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                if (isUploading) {
-                    Text("Uploading...", color = Color.White)
-                } else {
-                    Icon(Icons.Default.CloudUpload, null)
-                    Spacer(Modifier.width(8.dp))
-                    Text("Upload to Public Gallery")
-                }
-            }
-            
-            Text(
-                "Share your shot with the MoodCam community",
-                style = MaterialTheme.typography.bodySmall,
-                color = Color.Gray,
-                modifier = Modifier.padding(top = 8.dp)
-            )
+            Icon(Icons.Default.ArrowBack, "Back", tint = Color.White)
         }
     }
-}
-
-// Helpers
-private object ConstantScope {
-    // Hack for simple delay in lambda
-    fun launch(block: suspend () -> Unit) {
-        kotlinx.coroutines.GlobalScope.launch(kotlinx.coroutines.Dispatchers.Main) { block() }
-    }
-}
-
-private object RequestConstants {
-    val IconShape = RoundedCornerShape(50)
 }

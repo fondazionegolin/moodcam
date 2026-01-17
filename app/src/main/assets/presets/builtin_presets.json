@@ -1,134 +1,64 @@
 [
   {
-    "id": "fuji-provia",
-    "name": "PROVIA",
+    "id": "standard-film",
+    "name": "Standard Film",
     "type": "builtin",
-    "version": 1,
+    "version": 3,
     "params": {
       "exposureEV": 0.0,
-      "temperatureK": 6500,
+      "temperatureK": 5500,
       "tint": 0.0,
-      "saturation": 1.0,
-      "vibrance": 0.0,
-      "fade": 0.0,
-      "contrast": 1.0,
-      "highlights": 0.0,
-      "midtones": 0.0,
-      "shadows": 0.0,
-      "curves": {
-        "lutResolution": 256,
-        "lumaPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ],
-        "rPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ],
-        "gPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ],
-        "bPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ]
-      },
-      "grain": {
-        "strength": 0.15,
-        "size": 1.0,
-        "clumping": 0.3,
-        "toneMode": "MID"
-      },
-      "effects": {
-        "vignette": 0.0
-      }
-    }
-  },
-  {
-    "id": "fuji-velvia",
-    "name": "Velvia",
-    "type": "builtin",
-    "version": 1,
-    "params": {
-      "exposureEV": 0.0,
-      "temperatureK": 6500,
-      "tint": 0.0,
-      "saturation": 1.10,
+      "saturation": 1.05,
       "vibrance": 0.05,
       "fade": 0.0,
-      "contrast": 1.02,
-      "highlights": 0.0,
-      "midtones": 0.0,
+      "contrast": 1.08,
+      "highlights": -0.05,
+      "midtones": 0.02,
       "shadows": 0.0,
       "curves": {
         "lutResolution": 256,
         "lumaPoints": [
           [
             0.0,
-            0.0
+            0.02
+          ],
+          [
+            0.25,
+            0.24
           ],
           [
             0.5,
-            0.5
+            0.52
+          ],
+          [
+            0.75,
+            0.77
           ],
           [
             1.0,
-            1.0
+            0.98
           ]
         ],
         "rPoints": [
           [
             0.0,
-            0.0
+            0.01
+          ],
+          [
+            0.25,
+            0.26
           ],
           [
             0.5,
-            0.5
+            0.51
+          ],
+          [
+            0.75,
+            0.76
           ],
           [
             1.0,
-            1.0
+            0.99
           ]
         ],
         "gPoints": [
@@ -137,8 +67,16 @@
             0.0
           ],
           [
+            0.25,
+            0.25
+          ],
+          [
             0.5,
-            0.5
+            0.50
+          ],
+          [
+            0.75,
+            0.75
           ],
           [
             1.0,
@@ -148,22 +86,30 @@
         "bPoints": [
           [
             0.0,
-            0.0
+            0.01
+          ],
+          [
+            0.25,
+            0.26
           ],
           [
             0.5,
-            0.5
+            0.51
+          ],
+          [
+            0.75,
+            0.76
           ],
           [
             1.0,
-            1.0
+            0.99
           ]
         ]
       },
       "grain": {
-        "strength": 0.12,
+        "strength": 0.08,
         "size": 0.9,
-        "clumping": 0.3,
+        "clumping": 0.25,
         "toneMode": "MID"
       },
       "effects": {
@@ -172,107 +118,139 @@
     }
   },
   {
-    "id": "fuji-astia",
-    "name": "ASTIA",
+    "id": "analog-color",
+    "name": "Analog Color",
     "type": "builtin",
-    "version": 1,
+    "version": 3,
     "params": {
       "exposureEV": 0.0,
-      "temperatureK": 6500,
-      "tint": 0.0,
-      "saturation": 1.0,
-      "vibrance": 0.0,
-      "fade": 0.0,
+      "temperatureK": 5300,
+      "tint": 0.01,
+      "saturation": 0.92,
+      "vibrance": 0.03,
+      "fade": 0.01,
       "contrast": 0.98,
-      "highlights": 0.0,
+      "highlights": -0.03,
       "midtones": 0.0,
-      "shadows": 0.0,
+      "shadows": 0.05,
       "curves": {
         "lutResolution": 256,
         "lumaPoints": [
           [
             0.0,
-            0.0
+            0.04
+          ],
+          [
+            0.25,
+            0.27
           ],
           [
             0.5,
-            0.5
+            0.51
+          ],
+          [
+            0.75,
+            0.74
           ],
           [
             1.0,
-            1.0
+            0.96
           ]
         ],
         "rPoints": [
           [
             0.0,
-            0.0
+            0.02
+          ],
+          [
+            0.25,
+            0.27
           ],
           [
             0.5,
-            0.5
+            0.52
+          ],
+          [
+            0.75,
+            0.76
           ],
           [
             1.0,
-            1.0
+            0.98
           ]
         ],
         "gPoints": [
           [
             0.0,
-            0.0
+            0.01
+          ],
+          [
+            0.25,
+            0.25
           ],
           [
             0.5,
-            0.5
+            0.50
+          ],
+          [
+            0.75,
+            0.74
           ],
           [
             1.0,
-            1.0
+            0.98
           ]
         ],
         "bPoints": [
           [
             0.0,
-            0.0
+            0.02
+          ],
+          [
+            0.25,
+            0.25
           ],
           [
             0.5,
-            0.5
+            0.49
+          ],
+          [
+            0.75,
+            0.73
           ],
           [
             1.0,
-            1.0
+            0.97
           ]
         ]
       },
       "grain": {
         "strength": 0.10,
         "size": 1.0,
-        "clumping": 0.3,
-        "toneMode": "MID"
+        "clumping": 0.30,
+        "toneMode": "SHADOW"
       },
       "effects": {
-        "vignette": 0.0
+        "vignette": 0.05
       }
     }
   },
   {
-    "id": "fuji-classic-chrome",
-    "name": "Classic Chrome",
+    "id": "vibrant-color",
+    "name": "Vibrant Color",
     "type": "builtin",
-    "version": 1,
+    "version": 3,
     "params": {
-      "exposureEV": 0.0,
-      "temperatureK": 6500,
-      "tint": 0.0,
-      "saturation": 0.90,
-      "vibrance": 0.0,
+      "exposureEV": 0.05,
+      "temperatureK": 5600,
+      "tint": -0.01,
+      "saturation": 1.35,
+      "vibrance": 0.15,
       "fade": 0.0,
-      "contrast": 1.0,
-      "highlights": 0.0,
-      "midtones": 0.0,
-      "shadows": 0.0,
+      "contrast": 1.20,
+      "highlights": -0.10,
+      "midtones": 0.05,
+      "shadows": 0.08,
       "curves": {
         "lutResolution": 256,
         "lumaPoints": [
@@ -281,8 +259,16 @@
             0.0
           ],
           [
+            0.15,
+            0.10
+          ],
+          [
             0.5,
-            0.5
+            0.55
+          ],
+          [
+            0.85,
+            0.92
           ],
           [
             1.0,
@@ -295,8 +281,16 @@
             0.0
           ],
           [
+            0.25,
+            0.23
+          ],
+          [
             0.5,
-            0.5
+            0.52
+          ],
+          [
+            0.75,
+            0.78
           ],
           [
             1.0,
@@ -309,8 +303,16 @@
             0.0
           ],
           [
+            0.25,
+            0.22
+          ],
+          [
             0.5,
-            0.5
+            0.48
+          ],
+          [
+            0.75,
+            0.76
           ],
           [
             1.0,
@@ -320,11 +322,727 @@
         "bPoints": [
           [
             0.0,
-            0.0
+            0.02
+          ],
+          [
+            0.25,
+            0.28
           ],
           [
             0.5,
-            0.5
+            0.54
+          ],
+          [
+            0.75,
+            0.79
+          ],
+          [
+            1.0,
+            0.98
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.05,
+        "size": 0.7,
+        "clumping": 0.20,
+        "toneMode": "MID"
+      },
+      "effects": {
+        "vignette": 0.03
+      }
+    }
+  },
+  {
+    "id": "slide-film",
+    "name": "Slide Film",
+    "type": "builtin",
+    "version": 3,
+    "params": {
+      "exposureEV": -0.3,
+      "temperatureK": 5500,
+      "tint": 0.0,
+      "saturation": 1.25,
+      "vibrance": 0.10,
+      "fade": 0.0,
+      "contrast": 1.18,
+      "highlights": -0.12,
+      "midtones": 0.03,
+      "shadows": 0.05,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.20,
+            0.15
+          ],
+          [
+            0.5,
+            0.52
+          ],
+          [
+            0.80,
+            0.88
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.25,
+            0.24
+          ],
+          [
+            0.5,
+            0.51
+          ],
+          [
+            0.75,
+            0.77
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.25,
+            0.24
+          ],
+          [
+            0.5,
+            0.49
+          ],
+          [
+            0.75,
+            0.76
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.01
+          ],
+          [
+            0.25,
+            0.26
+          ],
+          [
+            0.5,
+            0.52
+          ],
+          [
+            0.75,
+            0.78
+          ],
+          [
+            1.0,
+            0.99
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.06,
+        "size": 0.75,
+        "clumping": 0.22,
+        "toneMode": "MID"
+      },
+      "effects": {
+        "vignette": 0.04
+      }
+    }
+  },
+  {
+    "id": "negative-film",
+    "name": "Negative Film",
+    "type": "builtin",
+    "version": 3,
+    "params": {
+      "exposureEV": 0.15,
+      "temperatureK": 5000,
+      "tint": 0.03,
+      "saturation": 1.00,
+      "vibrance": 0.05,
+      "fade": 0.02,
+      "contrast": 0.95,
+      "highlights": -0.05,
+      "midtones": 0.03,
+      "shadows": 0.12,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.06
+          ],
+          [
+            0.25,
+            0.28
+          ],
+          [
+            0.5,
+            0.52
+          ],
+          [
+            0.75,
+            0.75
+          ],
+          [
+            1.0,
+            0.95
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.04
+          ],
+          [
+            0.25,
+            0.28
+          ],
+          [
+            0.5,
+            0.53
+          ],
+          [
+            0.75,
+            0.77
+          ],
+          [
+            1.0,
+            0.97
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.02
+          ],
+          [
+            0.25,
+            0.26
+          ],
+          [
+            0.5,
+            0.50
+          ],
+          [
+            0.75,
+            0.74
+          ],
+          [
+            1.0,
+            0.97
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.03
+          ],
+          [
+            0.25,
+            0.25
+          ],
+          [
+            0.5,
+            0.48
+          ],
+          [
+            0.75,
+            0.72
+          ],
+          [
+            1.0,
+            0.94
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.12,
+        "size": 1.1,
+        "clumping": 0.35,
+        "toneMode": "SHADOW"
+      },
+      "effects": {
+        "vignette": 0.06
+      }
+    }
+  },
+  {
+    "id": "color-negative",
+    "name": "Color Negative",
+    "type": "builtin",
+    "version": 3,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 5400,
+      "tint": 0.01,
+      "saturation": 1.02,
+      "vibrance": 0.03,
+      "fade": 0.008,
+      "contrast": 1.05,
+      "highlights": -0.05,
+      "midtones": 0.0,
+      "shadows": 0.05,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.03
+          ],
+          [
+            0.25,
+            0.26
+          ],
+          [
+            0.5,
+            0.51
+          ],
+          [
+            0.75,
+            0.76
+          ],
+          [
+            1.0,
+            0.97
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.02
+          ],
+          [
+            0.25,
+            0.26
+          ],
+          [
+            0.5,
+            0.51
+          ],
+          [
+            0.75,
+            0.76
+          ],
+          [
+            1.0,
+            0.98
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.01
+          ],
+          [
+            0.25,
+            0.25
+          ],
+          [
+            0.5,
+            0.50
+          ],
+          [
+            0.75,
+            0.75
+          ],
+          [
+            1.0,
+            0.99
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.02
+          ],
+          [
+            0.25,
+            0.25
+          ],
+          [
+            0.5,
+            0.50
+          ],
+          [
+            0.75,
+            0.74
+          ],
+          [
+            1.0,
+            0.97
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.09,
+        "size": 0.95,
+        "clumping": 0.28,
+        "toneMode": "MID"
+      },
+      "effects": {
+        "vignette": 0.03
+      }
+    }
+  },
+  {
+    "id": "color-negative-low",
+    "name": "Color Negative Low",
+    "type": "builtin",
+    "version": 3,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 5400,
+      "tint": 0.01,
+      "saturation": 0.88,
+      "vibrance": 0.0,
+      "fade": 0.01,
+      "contrast": 0.92,
+      "highlights": -0.03,
+      "midtones": 0.0,
+      "shadows": 0.08,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.05
+          ],
+          [
+            0.25,
+            0.28
+          ],
+          [
+            0.5,
+            0.51
+          ],
+          [
+            0.75,
+            0.74
+          ],
+          [
+            1.0,
+            0.96
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.03
+          ],
+          [
+            0.25,
+            0.27
+          ],
+          [
+            0.5,
+            0.51
+          ],
+          [
+            0.75,
+            0.75
+          ],
+          [
+            1.0,
+            0.97
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.02
+          ],
+          [
+            0.25,
+            0.26
+          ],
+          [
+            0.5,
+            0.50
+          ],
+          [
+            0.75,
+            0.74
+          ],
+          [
+            1.0,
+            0.98
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.03
+          ],
+          [
+            0.25,
+            0.26
+          ],
+          [
+            0.5,
+            0.50
+          ],
+          [
+            0.75,
+            0.73
+          ],
+          [
+            1.0,
+            0.96
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.10,
+        "size": 1.0,
+        "clumping": 0.30,
+        "toneMode": "SHADOW"
+      },
+      "effects": {
+        "vignette": 0.04
+      }
+    }
+  },
+  {
+    "id": "analog-gold",
+    "name": "Analog Gold",
+    "type": "builtin",
+    "version": 3,
+    "params": {
+      "exposureEV": 0.05,
+      "temperatureK": 4800,
+      "tint": 0.04,
+      "saturation": 1.05,
+      "vibrance": 0.08,
+      "fade": 0.015,
+      "contrast": 0.98,
+      "highlights": -0.05,
+      "midtones": 0.03,
+      "shadows": 0.10,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.05
+          ],
+          [
+            0.25,
+            0.28
+          ],
+          [
+            0.5,
+            0.52
+          ],
+          [
+            0.75,
+            0.75
+          ],
+          [
+            1.0,
+            0.95
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.04
+          ],
+          [
+            0.25,
+            0.29
+          ],
+          [
+            0.5,
+            0.54
+          ],
+          [
+            0.75,
+            0.78
+          ],
+          [
+            1.0,
+            0.97
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.02
+          ],
+          [
+            0.25,
+            0.26
+          ],
+          [
+            0.5,
+            0.51
+          ],
+          [
+            0.75,
+            0.75
+          ],
+          [
+            1.0,
+            0.97
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.03
+          ],
+          [
+            0.25,
+            0.24
+          ],
+          [
+            0.5,
+            0.47
+          ],
+          [
+            0.75,
+            0.70
+          ],
+          [
+            1.0,
+            0.93
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.12,
+        "size": 1.1,
+        "clumping": 0.35,
+        "toneMode": "SHADOW"
+      },
+      "effects": {
+        "vignette": 0.08
+      }
+    }
+  },
+  {
+    "id": "night-negative",
+    "name": "Night Negative",
+    "type": "builtin",
+    "version": 3,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 7500,
+      "tint": -0.05,
+      "saturation": 0.95,
+      "vibrance": 0.0,
+      "fade": 0.008,
+      "contrast": 1.05,
+      "highlights": -0.08,
+      "midtones": 0.0,
+      "shadows": 0.05,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.03
+          ],
+          [
+            0.25,
+            0.26
+          ],
+          [
+            0.5,
+            0.51
+          ],
+          [
+            0.75,
+            0.76
+          ],
+          [
+            1.0,
+            0.97
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.25,
+            0.23
+          ],
+          [
+            0.5,
+            0.48
+          ],
+          [
+            0.75,
+            0.73
+          ],
+          [
+            1.0,
+            0.97
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.01
+          ],
+          [
+            0.25,
+            0.25
+          ],
+          [
+            0.5,
+            0.50
+          ],
+          [
+            0.75,
+            0.75
+          ],
+          [
+            1.0,
+            0.99
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.03
+          ],
+          [
+            0.25,
+            0.28
+          ],
+          [
+            0.5,
+            0.54
+          ],
+          [
+            0.75,
+            0.78
           ],
           [
             1.0,
@@ -333,132 +1051,526 @@
         ]
       },
       "grain": {
-        "strength": 0.15,
+        "strength": 0.14,
         "size": 1.0,
-        "clumping": 0.35,
-        "toneMode": "MID"
+        "clumping": 0.32,
+        "toneMode": "SHADOW"
       },
       "effects": {
-        "vignette": 0.0
+        "vignette": 0.05
       }
     }
   },
   {
-    "id": "fuji-classic-neg",
-    "name": "Classic Neg",
+    "id": "instant-color-1",
+    "name": "Instant Color 1",
     "type": "builtin",
-    "version": 1,
+    "version": 3,
     "params": {
-      "exposureEV": 0.0,
-      "temperatureK": 6500,
-      "tint": 0.0,
+      "exposureEV": 0.05,
+      "temperatureK": 5200,
+      "tint": 0.02,
       "saturation": 0.95,
-      "vibrance": 0.0,
-      "fade": 0.0,
-      "contrast": 1.0,
-      "highlights": 0.0,
-      "midtones": 0.0,
-      "shadows": 0.0,
+      "vibrance": 0.05,
+      "fade": 0.02,
+      "contrast": 0.95,
+      "highlights": -0.08,
+      "midtones": 0.02,
+      "shadows": 0.12,
       "curves": {
         "lutResolution": 256,
         "lumaPoints": [
           [
             0.0,
-            0.0
+            0.07
+          ],
+          [
+            0.25,
+            0.29
           ],
           [
             0.5,
-            0.5
+            0.52
+          ],
+          [
+            0.75,
+            0.74
           ],
           [
             1.0,
-            1.0
+            0.94
           ]
         ],
         "rPoints": [
           [
             0.0,
-            0.0
+            0.05
+          ],
+          [
+            0.25,
+            0.28
           ],
           [
             0.5,
-            0.5
+            0.53
+          ],
+          [
+            0.75,
+            0.76
           ],
           [
             1.0,
-            1.0
+            0.96
           ]
         ],
         "gPoints": [
           [
             0.0,
-            0.0
+            0.03
+          ],
+          [
+            0.25,
+            0.26
           ],
           [
             0.5,
-            0.5
+            0.50
+          ],
+          [
+            0.75,
+            0.73
           ],
           [
             1.0,
-            1.0
+            0.95
           ]
         ],
         "bPoints": [
           [
             0.0,
-            0.0
+            0.04
+          ],
+          [
+            0.25,
+            0.26
           ],
           [
             0.5,
-            0.5
+            0.49
+          ],
+          [
+            0.75,
+            0.72
           ],
           [
             1.0,
-            1.0
+            0.93
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.15,
+        "size": 1.2,
+        "clumping": 0.40,
+        "toneMode": "SHADOW"
+      },
+      "effects": {
+        "vignette": 0.12
+      }
+    }
+  },
+  {
+    "id": "instant-color-2",
+    "name": "Instant Color 2",
+    "type": "builtin",
+    "version": 3,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 6800,
+      "tint": -0.03,
+      "saturation": 0.90,
+      "vibrance": 0.02,
+      "fade": 0.02,
+      "contrast": 0.92,
+      "highlights": -0.10,
+      "midtones": 0.0,
+      "shadows": 0.15,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.08
+          ],
+          [
+            0.25,
+            0.30
+          ],
+          [
+            0.5,
+            0.52
+          ],
+          [
+            0.75,
+            0.73
+          ],
+          [
+            1.0,
+            0.93
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.04
+          ],
+          [
+            0.25,
+            0.26
+          ],
+          [
+            0.5,
+            0.50
+          ],
+          [
+            0.75,
+            0.73
+          ],
+          [
+            1.0,
+            0.94
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.05
+          ],
+          [
+            0.25,
+            0.27
+          ],
+          [
+            0.5,
+            0.51
+          ],
+          [
+            0.75,
+            0.74
+          ],
+          [
+            1.0,
+            0.95
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.06
+          ],
+          [
+            0.25,
+            0.29
+          ],
+          [
+            0.5,
+            0.53
+          ],
+          [
+            0.75,
+            0.76
+          ],
+          [
+            1.0,
+            0.96
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.16,
+        "size": 1.3,
+        "clumping": 0.42,
+        "toneMode": "SHADOW"
+      },
+      "effects": {
+        "vignette": 0.14
+      }
+    }
+  },
+  {
+    "id": "instant-color-3",
+    "name": "Instant Color 3",
+    "type": "builtin",
+    "version": 3,
+    "params": {
+      "exposureEV": 0.03,
+      "temperatureK": 5400,
+      "tint": 0.01,
+      "saturation": 0.92,
+      "vibrance": 0.04,
+      "fade": 0.02,
+      "contrast": 0.95,
+      "highlights": -0.06,
+      "midtones": 0.01,
+      "shadows": 0.10,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.06
+          ],
+          [
+            0.25,
+            0.28
+          ],
+          [
+            0.5,
+            0.51
+          ],
+          [
+            0.75,
+            0.74
+          ],
+          [
+            1.0,
+            0.95
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.04
+          ],
+          [
+            0.25,
+            0.27
+          ],
+          [
+            0.5,
+            0.52
+          ],
+          [
+            0.75,
+            0.75
+          ],
+          [
+            1.0,
+            0.96
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.03
+          ],
+          [
+            0.25,
+            0.26
+          ],
+          [
+            0.5,
+            0.50
+          ],
+          [
+            0.75,
+            0.74
+          ],
+          [
+            1.0,
+            0.96
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.04
+          ],
+          [
+            0.25,
+            0.26
+          ],
+          [
+            0.5,
+            0.49
+          ],
+          [
+            0.75,
+            0.73
+          ],
+          [
+            1.0,
+            0.95
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.14,
+        "size": 1.2,
+        "clumping": 0.38,
+        "toneMode": "SHADOW"
+      },
+      "effects": {
+        "vignette": 0.10
+      }
+    }
+  },
+  {
+    "id": "faded-film",
+    "name": "Faded Film",
+    "type": "builtin",
+    "version": 3,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 5100,
+      "tint": 0.03,
+      "saturation": 0.80,
+      "vibrance": -0.03,
+      "fade": 0.04,
+      "contrast": 0.90,
+      "highlights": -0.08,
+      "midtones": 0.02,
+      "shadows": 0.18,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.10
+          ],
+          [
+            0.25,
+            0.32
+          ],
+          [
+            0.5,
+            0.52
+          ],
+          [
+            0.75,
+            0.72
+          ],
+          [
+            1.0,
+            0.92
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.07
+          ],
+          [
+            0.25,
+            0.30
+          ],
+          [
+            0.5,
+            0.53
+          ],
+          [
+            0.75,
+            0.75
+          ],
+          [
+            1.0,
+            0.94
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.05
+          ],
+          [
+            0.25,
+            0.28
+          ],
+          [
+            0.5,
+            0.51
+          ],
+          [
+            0.75,
+            0.73
+          ],
+          [
+            1.0,
+            0.93
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.06
+          ],
+          [
+            0.25,
+            0.28
+          ],
+          [
+            0.5,
+            0.50
+          ],
+          [
+            0.75,
+            0.71
+          ],
+          [
+            1.0,
+            0.90
           ]
         ]
       },
       "grain": {
         "strength": 0.18,
-        "size": 1.1,
-        "clumping": 0.4,
-        "toneMode": "MID"
+        "size": 1.3,
+        "clumping": 0.45,
+        "toneMode": "SHADOW"
       },
       "effects": {
-        "vignette": 0.0
+        "vignette": 0.12
       }
     }
   },
   {
-    "id": "fuji-pro-neg-hi",
-    "name": "PRO Neg Hi",
+    "id": "sunny-day",
+    "name": "Sunny Day",
     "type": "builtin",
-    "version": 1,
+    "version": 3,
     "params": {
-      "exposureEV": 0.0,
-      "temperatureK": 6500,
-      "tint": 0.0,
-      "saturation": 0.95,
-      "vibrance": 0.0,
+      "exposureEV": 0.08,
+      "temperatureK": 5800,
+      "tint": -0.01,
+      "saturation": 1.10,
+      "vibrance": 0.08,
       "fade": 0.0,
-      "contrast": 1.0,
-      "highlights": 0.0,
-      "midtones": 0.0,
+      "contrast": 1.10,
+      "highlights": -0.10,
+      "midtones": 0.03,
       "shadows": 0.0,
       "curves": {
         "lutResolution": 256,
         "lumaPoints": [
           [
             0.0,
-            0.0
+            0.01
+          ],
+          [
+            0.25,
+            0.24
           ],
           [
             0.5,
-            0.5
+            0.52
+          ],
+          [
+            0.75,
+            0.78
           ],
           [
             1.0,
-            1.0
+            0.99
           ]
         ],
         "rPoints": [
@@ -467,8 +1579,16 @@
             0.0
           ],
           [
+            0.25,
+            0.25
+          ],
+          [
             0.5,
-            0.5
+            0.51
+          ],
+          [
+            0.75,
+            0.76
           ],
           [
             1.0,
@@ -481,8 +1601,16 @@
             0.0
           ],
           [
+            0.25,
+            0.25
+          ],
+          [
             0.5,
-            0.5
+            0.50
+          ],
+          [
+            0.75,
+            0.76
           ],
           [
             1.0,
@@ -492,22 +1620,30 @@
         "bPoints": [
           [
             0.0,
-            0.0
+            0.01
+          ],
+          [
+            0.25,
+            0.26
           ],
           [
             0.5,
-            0.5
+            0.52
+          ],
+          [
+            0.75,
+            0.77
           ],
           [
             1.0,
-            1.0
+            0.99
           ]
         ]
       },
       "grain": {
-        "strength": 0.10,
-        "size": 1.0,
-        "clumping": 0.3,
+        "strength": 0.06,
+        "size": 0.8,
+        "clumping": 0.22,
         "toneMode": "MID"
       },
       "effects": {
@@ -516,207 +1652,397 @@
     }
   },
   {
-    "id": "fuji-pro-neg-std",
-    "name": "PRO Neg Std",
+    "id": "vintage-kodak",
+    "name": "Vintage Kodak",
     "type": "builtin",
-    "version": 1,
+    "version": 3,
     "params": {
       "exposureEV": 0.0,
-      "temperatureK": 6500,
-      "tint": 0.0,
-      "saturation": 0.92,
-      "vibrance": 0.0,
-      "fade": 0.0,
-      "contrast": 0.98,
-      "highlights": 0.0,
-      "midtones": 0.0,
-      "shadows": 0.0,
+      "temperatureK": 4600,
+      "tint": 0.06,
+      "saturation": 0.88,
+      "vibrance": 0.05,
+      "fade": 0.008,
+      "contrast": 0.95,
+      "highlights": -0.10,
+      "midtones": 0.05,
+      "shadows": 0.15,
       "curves": {
         "lutResolution": 256,
         "lumaPoints": [
           [
             0.0,
-            0.0
+            0.08
+          ],
+          [
+            0.25,
+            0.30
           ],
           [
             0.5,
-            0.5
+            0.52
+          ],
+          [
+            0.75,
+            0.73
           ],
           [
             1.0,
-            1.0
+            0.93
           ]
         ],
         "rPoints": [
           [
             0.0,
-            0.0
+            0.06
+          ],
+          [
+            0.25,
+            0.30
           ],
           [
             0.5,
-            0.5
+            0.55
+          ],
+          [
+            0.75,
+            0.78
           ],
           [
             1.0,
-            1.0
+            0.96
           ]
         ],
         "gPoints": [
           [
             0.0,
-            0.0
+            0.04
+          ],
+          [
+            0.25,
+            0.27
           ],
           [
             0.5,
-            0.5
+            0.50
+          ],
+          [
+            0.75,
+            0.73
           ],
           [
             1.0,
-            1.0
+            0.94
           ]
         ],
         "bPoints": [
           [
             0.0,
-            0.0
+            0.05
+          ],
+          [
+            0.25,
+            0.25
           ],
           [
             0.5,
-            0.5
+            0.46
+          ],
+          [
+            0.75,
+            0.68
           ],
           [
             1.0,
-            1.0
-          ]
-        ]
-      },
-      "grain": {
-        "strength": 0.08,
-        "size": 1.0,
-        "clumping": 0.3,
-        "toneMode": "MID"
-      },
-      "effects": {
-        "vignette": 0.0
-      }
-    }
-  },
-  {
-    "id": "fuji-nostalgic-neg",
-    "name": "Nostalgic Neg",
-    "type": "builtin",
-    "version": 1,
-    "params": {
-      "exposureEV": 0.0,
-      "temperatureK": 6200,
-      "tint": 0.0,
-      "saturation": 0.92,
-      "vibrance": 0.0,
-      "fade": 0.0,
-      "contrast": 0.98,
-      "highlights": 0.0,
-      "midtones": 0.0,
-      "shadows": 0.0,
-      "curves": {
-        "lutResolution": 256,
-        "lumaPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ],
-        "rPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ],
-        "gPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ],
-        "bPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
+            0.88
           ]
         ]
       },
       "grain": {
         "strength": 0.20,
-        "size": 1.2,
-        "clumping": 0.45,
-        "toneMode": "MID"
+        "size": 1.4,
+        "clumping": 0.48,
+        "toneMode": "SHADOW"
       },
       "effects": {
-        "vignette": 0.0
+        "vignette": 0.15
       }
     }
   },
   {
-    "id": "fuji-eterna",
-    "name": "ETERNA",
+    "id": "metrocolor",
+    "name": "MetroColor",
     "type": "builtin",
-    "version": 1,
+    "version": 3,
     "params": {
       "exposureEV": 0.0,
-      "temperatureK": 6500,
-      "tint": 0.0,
-      "saturation": 0.85,
-      "vibrance": 0.0,
-      "fade": 0.0,
-      "contrast": 0.95,
-      "highlights": 0.0,
-      "midtones": 0.0,
-      "shadows": 0.0,
+      "temperatureK": 5600,
+      "tint": -0.01,
+      "saturation": 0.55,
+      "vibrance": -0.08,
+      "fade": 0.02,
+      "contrast": 1.18,
+      "highlights": -0.12,
+      "midtones": -0.03,
+      "shadows": 0.05,
       "curves": {
         "lutResolution": 256,
         "lumaPoints": [
           [
             0.0,
-            0.0
+            0.02
+          ],
+          [
+            0.20,
+            0.15
           ],
           [
             0.5,
-            0.5
+            0.52
+          ],
+          [
+            0.80,
+            0.88
+          ],
+          [
+            1.0,
+            0.98
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.01
+          ],
+          [
+            0.25,
+            0.24
+          ],
+          [
+            0.5,
+            0.50
+          ],
+          [
+            0.75,
+            0.76
+          ],
+          [
+            1.0,
+            0.99
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.25,
+            0.25
+          ],
+          [
+            0.5,
+            0.50
+          ],
+          [
+            0.75,
+            0.75
           ],
           [
             1.0,
             1.0
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.01
+          ],
+          [
+            0.25,
+            0.26
+          ],
+          [
+            0.5,
+            0.51
+          ],
+          [
+            0.75,
+            0.76
+          ],
+          [
+            1.0,
+            0.99
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.10,
+        "size": 0.9,
+        "clumping": 0.28,
+        "toneMode": "MID"
+      },
+      "effects": {
+        "vignette": 0.05
+      }
+    }
+  },
+  {
+    "id": "classic-color",
+    "name": "Classic Color",
+    "type": "builtin",
+    "version": 3,
+    "params": {
+      "exposureEV": 0.1,
+      "temperatureK": 5400,
+      "tint": 0.01,
+      "saturation": 1.05,
+      "vibrance": 0.05,
+      "fade": 0.02,
+      "contrast": 1.05,
+      "highlights": -0.05,
+      "midtones": 0.02,
+      "shadows": 0.03,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.02
+          ],
+          [
+            0.25,
+            0.25
+          ],
+          [
+            0.5,
+            0.51
+          ],
+          [
+            0.75,
+            0.76
+          ],
+          [
+            1.0,
+            0.98
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.01
+          ],
+          [
+            0.25,
+            0.26
+          ],
+          [
+            0.5,
+            0.51
+          ],
+          [
+            0.75,
+            0.76
+          ],
+          [
+            1.0,
+            0.99
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.25,
+            0.25
+          ],
+          [
+            0.5,
+            0.50
+          ],
+          [
+            0.75,
+            0.75
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.01
+          ],
+          [
+            0.25,
+            0.25
+          ],
+          [
+            0.5,
+            0.50
+          ],
+          [
+            0.75,
+            0.75
+          ],
+          [
+            1.0,
+            0.98
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.08,
+        "size": 0.95,
+        "clumping": 0.26,
+        "toneMode": "MID"
+      },
+      "effects": {
+        "vignette": 0.03
+      }
+    }
+  },
+  {
+    "id": "bw-negative",
+    "name": "B&W Negative",
+    "type": "builtin",
+    "version": 3,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 6500,
+      "tint": 0.0,
+      "saturation": 0.0,
+      "vibrance": 0.0,
+      "fade": 0.0,
+      "contrast": 1.10,
+      "highlights": -0.05,
+      "midtones": 0.0,
+      "shadows": 0.05,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.02
+          ],
+          [
+            0.25,
+            0.24
+          ],
+          [
+            0.5,
+            0.51
+          ],
+          [
+            0.75,
+            0.77
+          ],
+          [
+            1.0,
+            0.98
           ]
         ],
         "rPoints": [
@@ -725,8 +2051,16 @@
             0.0
           ],
           [
+            0.25,
+            0.25
+          ],
+          [
             0.5,
-            0.5
+            0.50
+          ],
+          [
+            0.75,
+            0.75
           ],
           [
             1.0,
@@ -739,8 +2073,16 @@
             0.0
           ],
           [
+            0.25,
+            0.25
+          ],
+          [
             0.5,
-            0.5
+            0.50
+          ],
+          [
+            0.75,
+            0.75
           ],
           [
             1.0,
@@ -753,8 +2095,16 @@
             0.0
           ],
           [
+            0.25,
+            0.25
+          ],
+          [
             0.5,
-            0.5
+            0.50
+          ],
+          [
+            0.75,
+            0.75
           ],
           [
             1.0,
@@ -764,117 +2114,149 @@
       },
       "grain": {
         "strength": 0.12,
-        "size": 0.9,
-        "clumping": 0.3,
+        "size": 0.85,
+        "clumping": 0.30,
+        "toneMode": "MID"
+      },
+      "effects": {
+        "vignette": 0.0
+      }
+    }
+  },
+  {
+    "id": "bw-fade",
+    "name": "B&W Fade",
+    "type": "builtin",
+    "version": 3,
+    "params": {
+      "exposureEV": 0.0,
+      "temperatureK": 6500,
+      "tint": 0.0,
+      "saturation": 0.0,
+      "vibrance": 0.0,
+      "fade": 0.02,
+      "contrast": 1.05,
+      "highlights": -0.08,
+      "midtones": -0.05,
+      "shadows": 0.15,
+      "curves": {
+        "lutResolution": 256,
+        "lumaPoints": [
+          [
+            0.0,
+            0.08
+          ],
+          [
+            0.25,
+            0.28
+          ],
+          [
+            0.5,
+            0.50
+          ],
+          [
+            0.75,
+            0.74
+          ],
+          [
+            1.0,
+            0.95
+          ]
+        ],
+        "rPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.25,
+            0.25
+          ],
+          [
+            0.5,
+            0.50
+          ],
+          [
+            0.75,
+            0.75
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "gPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.25,
+            0.25
+          ],
+          [
+            0.5,
+            0.50
+          ],
+          [
+            0.75,
+            0.75
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ],
+        "bPoints": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.25,
+            0.25
+          ],
+          [
+            0.5,
+            0.50
+          ],
+          [
+            0.75,
+            0.75
+          ],
+          [
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      "grain": {
+        "strength": 0.14,
+        "size": 1.0,
+        "clumping": 0.35,
         "toneMode": "SHADOW"
       },
       "effects": {
-        "vignette": 0.0
+        "vignette": 0.08
       }
     }
   },
   {
-    "id": "fuji-eterna-bleach",
-    "name": "ETERNA Bleach",
+    "id": "dramatic-bw",
+    "name": "Dramatic B&W",
     "type": "builtin",
-    "version": 1,
+    "version": 3,
     "params": {
-      "exposureEV": 0.0,
-      "temperatureK": 6500,
-      "tint": 0.0,
-      "saturation": 0.60,
-      "vibrance": 0.0,
-      "fade": 0.0,
-      "contrast": 1.05,
-      "highlights": 0.0,
-      "midtones": 0.0,
-      "shadows": 0.0,
-      "curves": {
-        "lutResolution": 256,
-        "lumaPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ],
-        "rPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ],
-        "gPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ],
-        "bPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ]
-      },
-      "grain": {
-        "strength": 0.15,
-        "size": 1.0,
-        "clumping": 0.35,
-        "toneMode": "MID"
-      },
-      "effects": {
-        "vignette": 0.0
-      }
-    }
-  },
-  {
-    "id": "fuji-acros",
-    "name": "ACROS",
-    "type": "builtin",
-    "version": 1,
-    "params": {
-      "exposureEV": 0.0,
+      "exposureEV": -0.05,
       "temperatureK": 6500,
       "tint": 0.0,
       "saturation": 0.0,
       "vibrance": 0.0,
       "fade": 0.0,
-      "contrast": 1.0,
-      "highlights": 0.0,
-      "midtones": 0.0,
-      "shadows": 0.0,
+      "contrast": 1.30,
+      "highlights": -0.15,
+      "midtones": -0.08,
+      "shadows": 0.10,
       "curves": {
         "lutResolution": 256,
         "lumaPoints": [
@@ -883,8 +2265,16 @@
             0.0
           ],
           [
+            0.15,
+            0.08
+          ],
+          [
             0.5,
-            0.5
+            0.52
+          ],
+          [
+            0.85,
+            0.94
           ],
           [
             1.0,
@@ -897,8 +2287,16 @@
             0.0
           ],
           [
+            0.25,
+            0.25
+          ],
+          [
             0.5,
-            0.5
+            0.50
+          ],
+          [
+            0.75,
+            0.75
           ],
           [
             1.0,
@@ -911,8 +2309,16 @@
             0.0
           ],
           [
+            0.25,
+            0.25
+          ],
+          [
             0.5,
-            0.5
+            0.50
+          ],
+          [
+            0.75,
+            0.75
           ],
           [
             1.0,
@@ -925,8 +2331,16 @@
             0.0
           ],
           [
+            0.25,
+            0.25
+          ],
+          [
             0.5,
-            0.5
+            0.50
+          ],
+          [
+            0.75,
+            0.75
           ],
           [
             1.0,
@@ -935,271 +2349,13 @@
         ]
       },
       "grain": {
-        "strength": 0.20,
-        "size": 0.8,
-        "clumping": 0.35,
+        "strength": 0.10,
+        "size": 0.75,
+        "clumping": 0.25,
         "toneMode": "MID"
       },
       "effects": {
-        "vignette": 0.0
-      }
-    }
-  },
-  {
-    "id": "fuji-mono",
-    "name": "Mono",
-    "type": "builtin",
-    "version": 1,
-    "params": {
-      "exposureEV": 0.0,
-      "temperatureK": 6500,
-      "tint": 0.0,
-      "saturation": 0.0,
-      "vibrance": 0.0,
-      "fade": 0.0,
-      "contrast": 1.0,
-      "highlights": 0.0,
-      "midtones": 0.0,
-      "shadows": 0.0,
-      "curves": {
-        "lutResolution": 256,
-        "lumaPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ],
-        "rPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ],
-        "gPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ],
-        "bPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ]
-      },
-      "grain": {
-        "strength": 0.15,
-        "size": 1.0,
-        "clumping": 0.35,
-        "toneMode": "MID"
-      },
-      "effects": {
-        "vignette": 0.0
-      }
-    }
-  },
-  {
-    "id": "fuji-reala-ace",
-    "name": "REALA ACE",
-    "type": "builtin",
-    "version": 1,
-    "params": {
-      "exposureEV": 0.0,
-      "temperatureK": 6500,
-      "tint": 0.0,
-      "saturation": 1.0,
-      "vibrance": 0.0,
-      "fade": 0.0,
-      "contrast": 1.0,
-      "highlights": 0.0,
-      "midtones": 0.0,
-      "shadows": 0.0,
-      "curves": {
-        "lutResolution": 256,
-        "lumaPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ],
-        "rPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ],
-        "gPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ],
-        "bPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ]
-      },
-      "grain": {
-        "strength": 0.08,
-        "size": 1.0,
-        "clumping": 0.3,
-        "toneMode": "MID"
-      },
-      "effects": {
-        "vignette": 0.0
-      }
-    }
-  },
-  {
-    "id": "fuji-sepia",
-    "name": "Sepia",
-    "type": "builtin",
-    "version": 1,
-    "params": {
-      "exposureEV": 0.0,
-      "temperatureK": 5800,
-      "tint": 0.05,
-      "saturation": 0.25,
-      "vibrance": 0.0,
-      "fade": 0.0,
-      "contrast": 1.0,
-      "highlights": 0.0,
-      "midtones": 0.0,
-      "shadows": 0.0,
-      "curves": {
-        "lutResolution": 256,
-        "lumaPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ],
-        "rPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ],
-        "gPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ],
-        "bPoints": [
-          [
-            0.0,
-            0.0
-          ],
-          [
-            0.5,
-            0.5
-          ],
-          [
-            1.0,
-            1.0
-          ]
-        ]
-      },
-      "grain": {
-        "strength": 0.22,
-        "size": 1.2,
-        "clumping": 0.45,
-        "toneMode": "MID"
-      },
-      "effects": {
-        "vignette": 0.0
+        "vignette": 0.10
       }
     }
   }

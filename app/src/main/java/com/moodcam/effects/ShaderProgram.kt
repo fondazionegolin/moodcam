@@ -119,6 +119,13 @@ class ShaderProgram(
         }
     }
     
+    fun setVec3(name: String, x: Float, y: Float, z: Float) {
+        val location = getUniformLocation(name)
+        if (location != -1) {
+            GLES30.glUniform3f(location, x, y, z)
+        }
+    }
+    
     fun release() {
         if (vertexShaderId != 0) {
             GLES30.glDeleteShader(vertexShaderId)

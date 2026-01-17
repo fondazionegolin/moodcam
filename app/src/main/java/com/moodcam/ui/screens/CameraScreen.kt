@@ -9,12 +9,17 @@ import android.os.Vibrator
 import android.os.VibratorManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.*
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -46,6 +51,7 @@ import coil.compose.AsyncImage
 import com.moodcam.R
 import com.moodcam.camera.CameraManager
 import com.moodcam.camera.CameraViewModel
+import com.moodcam.camera.CaptureResolution
 import com.moodcam.effects.GLRenderer
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.Dispatchers
@@ -123,6 +129,32 @@ fun CameraScreen(
     
     // State for portrait mode
     var isPortraitModeActive by remember { mutableStateOf(false) }
+    
+    // State for resolution selector dropdown
+    var showResolutionMenu by remember { mutableStateOf(false) }
+    var currentResolution by remember { mutableStateOf(cameraManager.captureResolution) }
+    
+    // Preset carousel state
+    var selectedPresetIndex by remember { mutableIntStateOf(0) }
+    
+    // Update index when presets list changes or initial load
+    LaunchedEffect(allPresets, selectedPreset) {
+        if (allPresets.isNotEmpty() && selectedPreset != null) {
+            val index = allPresets.indexOfFirst { it.id == selectedPreset!!.id }
+            if (index >= 0) selectedPresetIndex = index
+        }
+    }
+    
+    // Function to navigate presets
+    fun navigatePreset(delta: Int) {
+        if (allPresets.isEmpty()) return
+        val newIndex = (selectedPresetIndex + delta).coerceIn(0, allPresets.size - 1)
+        if (newIndex != selectedPresetIndex) {
+            selectedPresetIndex = newIndex
+            viewModel.selectPreset(allPresets[newIndex])
+            hapticClick()
+        }
+    }
     
     // JSON file picker for preset import
     val jsonPickerLauncher = rememberLauncherForActivityResult(
@@ -243,24 +275,143 @@ fun CameraScreen(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Top spacer with preset name
+            // Top bar with preset carousel and resolution indicator
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .statusBarsPadding()
-                    .padding(16.dp)
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 35.dp, bottom = 8.dp)
             ) {
-                selectedPreset?.let { preset ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    // Preset carousel with FIXED position colors (slot machine style)
+                    // Colors stay fixed to positions, only text content animates
                     Surface(
-                        color = Color.Black.copy(alpha = 0.5f),
-                        shape = MaterialTheme.shapes.small
+                        color = Color.Black.copy(alpha = 0.6f),
+                        shape = MaterialTheme.shapes.small,
+                        modifier = Modifier.width(180.dp)
                     ) {
-                        Text(
-                            text = preset.name,
-                            style = MaterialTheme.typography.labelLarge,
-                            color = Color.Yellow,
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
-                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 6.dp, vertical = 4.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            // LEFT SLOT - always white/faded (fixed color)
+                            Box(modifier = Modifier.width(40.dp)) {
+                                AnimatedContent(
+                                    targetState = if (selectedPresetIndex > 0 && allPresets.isNotEmpty()) 
+                                        allPresets[selectedPresetIndex - 1].name else "",
+                                    transitionSpec = {
+                                        slideInHorizontally { -it } togetherWith slideOutHorizontally { it }
+                                    },
+                                    label = "left_slot"
+                                ) { name ->
+                                    Text(
+                                        text = name,
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = Color.White.copy(alpha = 0.35f),
+                                        maxLines = 1,
+                                        overflow = androidx.compose.ui.text.style.TextOverflow.Clip
+                                    )
+                                }
+                            }
+                            
+                            // CENTER SLOT - always YELLOW (fixed color)
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(horizontal = 4.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                AnimatedContent(
+                                    targetState = selectedPreset?.name ?: "",
+                                    transitionSpec = {
+                                        slideInHorizontally { it } togetherWith slideOutHorizontally { -it }
+                                    },
+                                    label = "center_slot"
+                                ) { name ->
+                                    Text(
+                                        text = name,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = Color.Yellow,
+                                        maxLines = 1,
+                                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                                        modifier = Modifier.fillMaxWidth()
+                                    )
+                                }
+                            }
+                            
+                            // RIGHT SLOT - always white/faded (fixed color)
+                            Box(modifier = Modifier.width(40.dp)) {
+                                AnimatedContent(
+                                    targetState = if (selectedPresetIndex < allPresets.size - 1 && allPresets.isNotEmpty()) 
+                                        allPresets[selectedPresetIndex + 1].name else "",
+                                    transitionSpec = {
+                                        slideInHorizontally { it } togetherWith slideOutHorizontally { -it }
+                                    },
+                                    label = "right_slot"
+                                ) { name ->
+                                    Text(
+                                        text = name,
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = Color.White.copy(alpha = 0.35f),
+                                        maxLines = 1,
+                                        overflow = androidx.compose.ui.text.style.TextOverflow.Clip,
+                                        modifier = Modifier.fillMaxWidth(),
+                                        textAlign = androidx.compose.ui.text.style.TextAlign.End
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Resolution badge (right) with dropdown
+                    Box {
+                        Surface(
+                            color = Color.Black.copy(alpha = 0.5f),
+                            shape = MaterialTheme.shapes.small,
+                            modifier = Modifier.clickable {
+                                hapticClick()
+                                showResolutionMenu = true
+                            }
+                        ) {
+                            Text(
+                                text = currentResolution.label,
+                                style = MaterialTheme.typography.labelLarge,
+                                color = Color.White,
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                            )
+                        }
+                        
+                        // Resolution dropdown menu
+                        DropdownMenu(
+                            expanded = showResolutionMenu,
+                            onDismissRequest = { showResolutionMenu = false }
+                        ) {
+                            CaptureResolution.entries.forEach { resolution ->
+                                DropdownMenuItem(
+                                    text = { 
+                                        Text(
+                                            text = resolution.label,
+                                            color = if (resolution == currentResolution) Color.Yellow else Color.Unspecified
+                                        ) 
+                                    },
+                                    onClick = {
+                                        hapticClick()
+                                        currentResolution = resolution
+                                        cameraManager.setResolution(resolution)
+                                        showResolutionMenu = false
+                                    }
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -298,6 +449,29 @@ fun CameraScreen(
                                     exposureCompensation = 0
                                     cameraManager.setExposureCompensation(0)
                                     showExposureSlider = true
+                                }
+                            )
+                        }
+                        .pointerInput(allPresets.size) {
+                            // Horizontal swipe to change preset
+                            var totalDrag = 0f
+                            detectHorizontalDragGestures(
+                                onDragEnd = {
+                                    // Swipe threshold: 100px
+                                    if (totalDrag < -100f) {
+                                        // Swipe left → next preset
+                                        navigatePreset(1)
+                                    } else if (totalDrag > 100f) {
+                                        // Swipe right → previous preset
+                                        navigatePreset(-1)
+                                    }
+                                    totalDrag = 0f
+                                },
+                                onDragCancel = {
+                                    totalDrag = 0f
+                                },
+                                onHorizontalDrag = { _, dragAmount ->
+                                    totalDrag += dragAmount
                                 }
                             )
                         }
@@ -460,6 +634,46 @@ fun CameraScreen(
                 
                 // Rule of thirds grid
                 RuleOfThirdsGrid(modifier = Modifier.fillMaxSize())
+                
+                // Frame preview overlay - shows the frame border in live preview
+                if (kotlin.math.abs(uiState.frameWidth) > 0.1f) {
+                    val frameColor = if (uiState.frameWidth > 0) Color.White else Color.Black
+                    val frameFraction = kotlin.math.abs(uiState.frameWidth) * 0.033f // 10% at max value (3.0)
+                    
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .drawWithContent {
+                                drawContent()
+                                // Draw frame border overlay
+                                val strokeWidth = size.minDimension * frameFraction
+                                // Top border
+                                drawRect(
+                                    color = frameColor,
+                                    topLeft = Offset.Zero,
+                                    size = androidx.compose.ui.geometry.Size(size.width, strokeWidth)
+                                )
+                                // Bottom border
+                                drawRect(
+                                    color = frameColor,
+                                    topLeft = Offset(0f, size.height - strokeWidth),
+                                    size = androidx.compose.ui.geometry.Size(size.width, strokeWidth)
+                                )
+                                // Left border
+                                drawRect(
+                                    color = frameColor,
+                                    topLeft = Offset.Zero,
+                                    size = androidx.compose.ui.geometry.Size(strokeWidth, size.height)
+                                )
+                                // Right border
+                                drawRect(
+                                    color = frameColor,
+                                    topLeft = Offset(size.width - strokeWidth, 0f),
+                                    size = androidx.compose.ui.geometry.Size(strokeWidth, size.height)
+                                )
+                            }
+                    )
+                }
                 
                 // Iris shutter animation overlay
                 if (showShutterAnimation) {

@@ -34,6 +34,12 @@ uniform float uBloom;
 uniform float uHalation;
 uniform float uClarity;
 
+// Per-channel tone adjustments (White/R/G/B x Highlights/Midtones/Shadows)
+uniform vec3 uTonesWhite;   // x=highlights, y=midtones, z=shadows
+uniform vec3 uTonesRed;
+uniform vec3 uTonesGreen;
+uniform vec3 uTonesBlue;
+
 uniform int uPortraitMode;
 uniform sampler2D uMaskTexture;
 
@@ -123,7 +129,30 @@ vec3 applyTones(vec3 rgb, float highlights, float midtones, float shadows) {
     float highlightWeight = pow(l, 2.0);
     float midtoneWeight = exp(-pow((l - 0.5) * 2.5, 2.0));
     float adjustment = shadows * shadowWeight + midtones * midtoneWeight + highlights * highlightWeight;
-    return rgb * pow(2.0, adjustment * 0.5);
+    // Reduced intensity: 0.2 instead of 0.5 for more subtle adjustments
+    return rgb * pow(2.0, adjustment * 0.2);
+}
+
+// Per-channel tone adjustments
+float applyToneChannel(float value, float lum, vec3 tones) {
+    float shadowWeight = pow(1.0 - lum, 2.0);
+    float highlightWeight = pow(lum, 2.0);
+    float midtoneWeight = exp(-pow((lum - 0.5) * 2.5, 2.0));
+    float adjustment = tones.z * shadowWeight + tones.y * midtoneWeight + tones.x * highlightWeight;
+    return value * pow(2.0, adjustment * 0.25);
+}
+
+vec3 applyChannelTones(vec3 rgb, vec3 whiteTones, vec3 redTones, vec3 greenTones, vec3 blueTones) {
+    float l = luma(rgb);
+    vec3 result = rgb;
+    result.r = applyToneChannel(result.r, l, redTones);
+    result.g = applyToneChannel(result.g, l, greenTones);
+    result.b = applyToneChannel(result.b, l, blueTones);
+    float whiteAdjust = whiteTones.z * pow(1.0 - l, 2.0) + 
+                        whiteTones.y * exp(-pow((l - 0.5) * 2.5, 2.0)) + 
+                        whiteTones.x * pow(l, 2.0);
+    result *= pow(2.0, whiteAdjust * 0.25);
+    return result;
 }
 
 // ============================================================
@@ -211,71 +240,73 @@ float cellularGrain(vec2 p, float seed) {
     return secondDist - minDist;
 }
 
-// Main grain function - authentic film-like
-vec3 getAuthenticFilmGrain(vec2 uv, float Y) {
-    // Animated seed per frame (24fps film look)
-    float frame = floor(uTime * 24.0);
-    float seed = frame * 137.5;  // Golden ratio derivative for good distribution
+// ========================================
+// HIGH ISO NOISE - Per-pixel random noise
+// Like camera sensor noise at high ISO
+// ========================================
+
+// High quality per-pixel random (different every pixel)
+float rand(vec2 co) {
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+// Get random value for this exact pixel (screen coordinates)
+float pixelNoise(vec2 uv, float seed) {
+    vec2 pixelCoord = floor(uv * uResolution);
+    return rand(pixelCoord + seed);
+}
+
+vec3 getHighIsoNoise(vec2 uv, float luminance) {
+    float amount = uGrainStrength;
     
-    // Scale by resolution and grain size - MUCH FINER grain
-    vec2 pixelPos = uv * uResolution * 3.0 / max(uGrainSize * 1.5 + 0.5, 0.5);
+    // ===== SHADOW RESPONSE =====
+    // High ISO noise is MORE visible in shadows
+    float shadowFactor = 1.0;
+    if (uGrainToneMode == 0) {
+        // Heavy shadow noise
+        shadowFactor = 1.5 + (1.0 - luminance) * 2.0;
+    } else if (uGrainToneMode == 1) {
+        // Balanced
+        shadowFactor = 1.0 + (1.0 - luminance) * 1.0;
+    } else {
+        // Flat
+        shadowFactor = 1.0;
+    }
     
-    // ========================================
-    // 1. LUMINANCE-BASED RESPONSE
-    // Grain exists everywhere but is more visible in shadows/midtones
-    // Per article: "less grain in highlights and deep shadows"
-    // ========================================
-    float toneMask = 1.0 - pow(abs(Y - 0.35), 0.8);  // Peak at shadows/lower-mids
-    toneMask = toneMask * 0.7 + 0.3;  // Always some grain (never zero)
+    // ===== GRAIN SIZE affects pixel grouping =====
+    // Larger grain = group pixels together
+    float pixelGroup = max(1.0, uGrainSize * 2.0);
+    vec2 groupedUv = floor(uv * uResolution / pixelGroup) * pixelGroup / uResolution;
     
-    // ========================================
-    // 2. FINE GRAIN - Organic particles per channel
-    // Each color layer has DIFFERENT grain (dye particles)
-    // ========================================
-    float scale1 = 2.5;   // Finer grain
-    float scale2 = 2.9;   // Slightly different scale per channel
-    float scale3 = 2.2;
+    // Time-based seed for animation (subtle drift)
+    float timeSeed = floor(uTime * 15.0) * 0.01;
     
-    // Red channel grain
-    float grainR = organicNoise(pixelPos * scale1, seed);
-    grainR += cellularGrain(pixelPos * 0.5, seed) * 0.3;
-    grainR = grainR * 2.0 - 1.0;  // Center around 0
+    // ===== LUMINANCE NOISE (brightness variation) =====
+    float lumaNoiseR = pixelNoise(groupedUv, timeSeed + 0.0) - 0.5;
+    float lumaNoiseG = pixelNoise(groupedUv, timeSeed + 100.0) - 0.5;
+    float lumaNoiseB = pixelNoise(groupedUv, timeSeed + 200.0) - 0.5;
     
-    // Green channel grain (different offset and scale)
-    float grainG = organicNoise(pixelPos * scale2 + 50.0, seed + 33.0);
-    grainG += cellularGrain(pixelPos * 0.53, seed + 33.0) * 0.3;
-    grainG = grainG * 2.0 - 1.0;
+    // Average luminance noise (correlated across channels)
+    float lumaNoise = (lumaNoiseR + lumaNoiseG + lumaNoiseB) / 3.0;
     
-    // Blue channel grain
-    float grainB = organicNoise(pixelPos * scale3 + 100.0, seed + 66.0);
-    grainB += cellularGrain(pixelPos * 0.47, seed + 66.0) * 0.3;
-    grainB = grainB * 2.0 - 1.0;
+    // ===== CHROMA NOISE (color variation - uncorrelated) =====
+    float chromaR = pixelNoise(groupedUv, timeSeed + 300.0) - 0.5;
+    float chromaG = pixelNoise(groupedUv, timeSeed + 400.0) - 0.5;
+    float chromaB = pixelNoise(groupedUv, timeSeed + 500.0) - 0.5;
     
-    vec3 fineGrain = vec3(grainR, grainG, grainB);
+    // Chroma noise is typically less than luminance noise (30%)
+    float chromaAmount = 0.3;
     
-    // ========================================
-    // 3. COARSE GRAIN - Larger organic clumps
-    // Creates the "organic uneven distribution"
-    // ========================================
-    float coarseScale = 0.15 / max(uGrainSize, 0.3);
-    vec2 coarsePos = pixelPos * coarseScale;
+    // ===== COMBINE =====
+    vec3 noise;
+    noise.r = lumaNoise + chromaR * chromaAmount;
+    noise.g = lumaNoise + chromaG * chromaAmount;
+    noise.b = lumaNoise + chromaB * chromaAmount;
     
-    float coarse = cellularGrain(coarsePos, seed * 0.1);
-    coarse = smoothstep(0.1, 0.5, coarse);  // Threshold for clumping
+    // Apply amount and shadow factor
+    noise *= amount * shadowFactor * 0.15;
     
-    // ========================================
-    // 4. MACRO VARIATION - Large scale non-uniformity
-    // Simulates emulsion thickness variations
-    // ========================================
-    float macroNoise = goldNoise(uv * 5.0, frame * 0.01);
-    float macroMod = 0.75 + macroNoise * 0.5;  // 0.75 to 1.25
-    
-    // ========================================
-    // 5. COMBINE: fine grain * coarse mask * tone mask * macro
-    // ========================================
-    vec3 grain = fineGrain * coarse * toneMask * macroMod * uGrainStrength;
-    
-    return grain;
+    return noise;
 }
 
 float getVignette(vec2 uv, float strength) {
@@ -359,24 +390,21 @@ void main() {
     rgb = applyVibrance(rgb, uVibrance);
     
     rgb = applyTones(rgb, uHighlights, uMidtones, uShadows);
+    
+    // Per-channel tone adjustments
+    rgb = applyChannelTones(rgb, uTonesWhite, uTonesRed, uTonesGreen, uTonesBlue);
     rgb = clamp(rgb, 0.0, 1.0);
     
     Y = luma(rgb);
     
-    // AUTHENTIC FILM GRAIN
+    // HIGH ISO NOISE - per-pixel random like camera sensor
     if (uGrainStrength > 0.001) {
-        vec3 grain = getAuthenticFilmGrain(vTexCoord, Y);
-        rgb += grain * 0.18;  // Balanced intensity
+        vec3 noise = getHighIsoNoise(vTexCoord, Y);
+        rgb += noise;
     }
     
     if (uVignette > 0.001) {
         rgb *= getVignette(vTexCoord, uVignette);
-    }
-    
-    // Clarity (local contrast - apply early for best effect)
-    if (abs(uClarity) > 0.001) {
-        rgb = applyClarity(rgb, vTexCoord, uClarity);
-        rgb = clamp(rgb, 0.0, 1.0);
     }
     
     // Bloom

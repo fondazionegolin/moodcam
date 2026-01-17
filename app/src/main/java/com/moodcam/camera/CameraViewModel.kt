@@ -14,6 +14,7 @@ import com.moodcam.preset.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.io.File
+import android.content.Context
 
 /**
  * ViewModel managing camera state and preset selection.
@@ -54,10 +55,19 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
     val editingPreset: StateFlow<FilmPreset?> = _editingPreset.asStateFlow()
     
     init {
-        // Load default preset on init
+        // Load last used preset on init (or default if first launch)
         viewModelScope.launch {
-            val defaultPreset = presetRepository.getDefaultPreset()
-            selectPreset(defaultPreset)
+            val prefs = getApplication<Application>().getSharedPreferences("moodcam_prefs", Context.MODE_PRIVATE)
+            val lastPresetId = prefs.getString("last_preset_id", null)
+            
+            val preset = if (lastPresetId != null) {
+                // Try to find the last used preset
+                allPresets.first { it.isNotEmpty() }.find { it.id == lastPresetId }
+                    ?: presetRepository.getDefaultPreset()
+            } else {
+                presetRepository.getDefaultPreset()
+            }
+            selectPreset(preset)
         }
     }
     
@@ -68,6 +78,14 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
         _selectedPreset.value = preset
         _activeParams.value = preset.params
         _uiState.update { it.copy(showLibrary = false) }
+        
+        // Save last used preset ID
+        viewModelScope.launch {
+            getApplication<Application>().getSharedPreferences("moodcam_prefs", Context.MODE_PRIVATE)
+                .edit()
+                .putString("last_preset_id", preset.id)
+                .apply()
+        }
     }
     
     /**
@@ -258,12 +276,14 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
     }
     
     /**
-     * Add a frame/border to the bitmap.
+     * Add a frame/border to the bitmap by expanding the canvas.
+     * Photo stays unchanged, output is larger with frame around it.
      */
     private fun addFrame(source: Bitmap, frameWidth: Float): Bitmap {
         val frameSize = (kotlin.math.abs(frameWidth) * source.width * 0.1f).toInt()
         if (frameSize <= 0) return source
         
+        // Expand canvas to fit frame
         val newWidth = source.width + frameSize * 2
         val newHeight = source.height + frameSize * 2
         
@@ -275,7 +295,7 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
         // Fill with frame color
         canvas.drawColor(frameColor)
         
-        // Draw original bitmap centered
+        // Draw original bitmap centered (not scaled)
         canvas.drawBitmap(source, frameSize.toFloat(), frameSize.toFloat(), null)
         
         return result

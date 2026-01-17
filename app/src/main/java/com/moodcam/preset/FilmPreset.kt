@@ -49,15 +49,19 @@ data class PresetParams(
     @SerializedName("vibrance")
     val vibrance: Float = 0f,
     
-    // Tone adjustments (highlights, midtones, shadows)
+    // Legacy global tone adjustments (kept for backward compatibility)
     @SerializedName("highlights")
-    val highlights: Float = 0f,  // -1.0 to +1.0
+    val highlights: Float = 0f,
     
     @SerializedName("midtones")
-    val midtones: Float = 0f,    // -1.0 to +1.0
+    val midtones: Float = 0f,
     
     @SerializedName("shadows")
-    val shadows: Float = 0f,     // -1.0 to +1.0
+    val shadows: Float = 0f,
+    
+    // Per-channel tone adjustments (R, G, B, White/Luma)
+    @SerializedName("channelTones")
+    val channelTones: ChannelTonesParams = ChannelTonesParams(),
     
     // White balance
     @SerializedName("temperatureK")
@@ -81,6 +85,37 @@ data class PresetParams(
     // Effects
     @SerializedName("effects")
     val effects: EffectsParams = EffectsParams()
+)
+
+/**
+ * Per-channel tone adjustments (Highlights/Midtones/Shadows for each channel).
+ */
+data class ChannelTonesParams(
+    @SerializedName("white")
+    val white: ToneValues = ToneValues(),
+    
+    @SerializedName("red")
+    val red: ToneValues = ToneValues(),
+    
+    @SerializedName("green")
+    val green: ToneValues = ToneValues(),
+    
+    @SerializedName("blue")
+    val blue: ToneValues = ToneValues()
+)
+
+/**
+ * Tone values for a single channel.
+ */
+data class ToneValues(
+    @SerializedName("highlights")
+    val highlights: Float = 0f,  // -1.0 to +1.0
+    
+    @SerializedName("midtones")
+    val midtones: Float = 0f,    // -1.0 to +1.0
+    
+    @SerializedName("shadows")
+    val shadows: Float = 0f      // -1.0 to +1.0
 )
 
 /**

@@ -100,6 +100,13 @@ class FilmPostProcessor(private val context: Context) {
             shader.setFloat("uHalation", p.effects.halation)
             shader.setFloat("uClarity", p.clarity)
             
+            // Per-channel tone adjustments
+            val tones = p.channelTones
+            shader.setVec3("uTonesWhite", tones.white.highlights, tones.white.midtones, tones.white.shadows)
+            shader.setVec3("uTonesRed", tones.red.highlights, tones.red.midtones, tones.red.shadows)
+            shader.setVec3("uTonesGreen", tones.green.highlights, tones.green.midtones, tones.green.shadows)
+            shader.setVec3("uTonesBlue", tones.blue.highlights, tones.blue.midtones, tones.blue.shadows)
+            
             // Disable portrait processing in shader (photo already has bokeh or is flat)
             shader.setInt("uPortraitMode", 0)
             

@@ -33,6 +33,12 @@ uniform float uBloom;
 uniform float uHalation;
 uniform float uClarity;
 
+// Per-channel tone adjustments (White/R/G/B x Highlights/Midtones/Shadows)
+uniform vec3 uTonesWhite;   // x=highlights, y=midtones, z=shadows
+uniform vec3 uTonesRed;
+uniform vec3 uTonesGreen;
+uniform vec3 uTonesBlue;
+
 uniform int uPortraitMode;
 uniform sampler2D uMaskTexture;
 
@@ -122,114 +128,87 @@ vec3 applyTones(vec3 rgb, float highlights, float midtones, float shadows) {
     float highlightWeight = pow(l, 2.0);
     float midtoneWeight = exp(-pow((l - 0.5) * 2.5, 2.0));
     float adjustment = shadows * shadowWeight + midtones * midtoneWeight + highlights * highlightWeight;
-    return rgb * pow(2.0, adjustment * 0.5);
+    // Reduced intensity: 0.2 instead of 0.5 for more subtle adjustments
+    return rgb * pow(2.0, adjustment * 0.2);
 }
 
-// ============================================================
-// AUTHENTIC FILM GRAIN (same as preview)
-// ============================================================
-
-float goldNoise(vec2 xy, float seed) {
-    float PHI = 1.61803398874989484820459;
-    return fract(tan(distance(xy * PHI, xy) * seed) * xy.x);
+// Per-channel tone adjustments
+float applyToneChannel(float value, float lum, vec3 tones) {
+    // tones.x = highlights, tones.y = midtones, tones.z = shadows
+    float shadowWeight = pow(1.0 - lum, 2.0);
+    float highlightWeight = pow(lum, 2.0);
+    float midtoneWeight = exp(-pow((lum - 0.5) * 2.5, 2.0));
+    float adjustment = tones.z * shadowWeight + tones.y * midtoneWeight + tones.x * highlightWeight;
+    return value * pow(2.0, adjustment * 0.25);
 }
 
-float random(vec2 st) {
-    return fract(sin(dot(st, vec2(12.9898, 78.233))) * 43758.5453123);
+vec3 applyChannelTones(vec3 rgb, vec3 whiteTones, vec3 redTones, vec3 greenTones, vec3 blueTones) {
+    float l = luma(rgb);
+    
+    // Apply per-channel adjustments
+    vec3 result = rgb;
+    result.r = applyToneChannel(result.r, l, redTones);
+    result.g = applyToneChannel(result.g, l, greenTones);
+    result.b = applyToneChannel(result.b, l, blueTones);
+    
+    // Apply white/luminance adjustment (affects all channels equally)
+    float whiteAdjust = whiteTones.z * pow(1.0 - l, 2.0) + 
+                        whiteTones.y * exp(-pow((l - 0.5) * 2.5, 2.0)) + 
+                        whiteTones.x * pow(l, 2.0);
+    result *= pow(2.0, whiteAdjust * 0.25);
+    
+    return result;
 }
 
-float organicNoise(vec2 p, float seed) {
-    float angle = seed * 0.1;
-    float c = cos(angle);
-    float s = sin(angle);
-    p = mat2(c, -s, s, c) * p;
-    
-    vec2 offset = vec2(
-        goldNoise(p * 0.01, seed),
-        goldNoise(p * 0.01 + 100.0, seed + 1.0)
-    ) * 2.0;
-    
-    p += offset;
-    
-    float n1 = random(floor(p * 1.0));
-    float n2 = random(floor(p * 2.7));
-    float n3 = random(floor(p * 7.3));
-    
-    float mixFactor = goldNoise(p * 0.1, seed + 2.0);
-    float n = mix(n1, n2, mixFactor) * 0.6 + n3 * 0.4;
-    
-    return n;
+// ========================================
+// HIGH ISO NOISE - Per-pixel random noise
+// ========================================
+
+float rand(vec2 co) {
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
 }
 
-float cellularGrain(vec2 p, float seed) {
-    vec2 i = floor(p);
-    vec2 f = fract(p);
+float pixelNoise(vec2 uv, float seed) {
+    vec2 pixelCoord = floor(uv * uResolution);
+    return rand(pixelCoord + seed);
+}
+
+vec3 getHighIsoNoise(vec2 uv, float luminance) {
+    float amount = uGrainStrength;
     
-    float minDist = 1.0;
-    float secondDist = 1.0;
-    
-    for(int y = -1; y <= 1; y++) {
-        for(int x = -1; x <= 1; x++) {
-            vec2 neighbor = vec2(float(x), float(y));
-            vec2 cellOffset = i + neighbor;
-            vec2 point = vec2(
-                random(cellOffset + seed),
-                random(cellOffset + seed + 100.0)
-            );
-            
-            float d = length(neighbor + point - f);
-            
-            if(d < minDist) {
-                secondDist = minDist;
-                minDist = d;
-            } else if(d < secondDist) {
-                secondDist = d;
-            }
-        }
+    float shadowFactor = 1.0;
+    if (uGrainToneMode == 0) {
+        shadowFactor = 1.5 + (1.0 - luminance) * 2.0;
+    } else if (uGrainToneMode == 1) {
+        shadowFactor = 1.0 + (1.0 - luminance) * 1.0;
+    } else {
+        shadowFactor = 1.0;
     }
     
-    return secondDist - minDist;
-}
-
-vec3 getAuthenticFilmGrain(vec2 uv, float Y) {
-    float frame = floor(uTime * 24.0);
-    float seed = frame * 137.5;
+    float pixelGroup = max(1.0, uGrainSize * 2.0);
+    vec2 groupedUv = floor(uv * uResolution / pixelGroup) * pixelGroup / uResolution;
     
-    vec2 pixelPos = uv * uResolution * 3.0 / max(uGrainSize * 1.5 + 0.5, 0.5);
+    float timeSeed = floor(uTime * 15.0) * 0.01;
     
-    float toneMask = 1.0 - pow(abs(Y - 0.35), 0.8);
-    toneMask = toneMask * 0.7 + 0.3;
+    float lumaNoiseR = pixelNoise(groupedUv, timeSeed + 0.0) - 0.5;
+    float lumaNoiseG = pixelNoise(groupedUv, timeSeed + 100.0) - 0.5;
+    float lumaNoiseB = pixelNoise(groupedUv, timeSeed + 200.0) - 0.5;
+    float lumaNoise = (lumaNoiseR + lumaNoiseG + lumaNoiseB) / 3.0;
     
-    float scale1 = 2.5;
-    float scale2 = 2.9;
-    float scale3 = 2.2;
+    float chromaR = pixelNoise(groupedUv, timeSeed + 300.0) - 0.5;
+    float chromaG = pixelNoise(groupedUv, timeSeed + 400.0) - 0.5;
+    float chromaB = pixelNoise(groupedUv, timeSeed + 500.0) - 0.5;
     
-    float grainR = organicNoise(pixelPos * scale1, seed);
-    grainR += cellularGrain(pixelPos * 0.5, seed) * 0.3;
-    grainR = grainR * 2.0 - 1.0;
+    float chromaAmount = 0.3;
     
-    float grainG = organicNoise(pixelPos * scale2 + 50.0, seed + 33.0);
-    grainG += cellularGrain(pixelPos * 0.53, seed + 33.0) * 0.3;
-    grainG = grainG * 2.0 - 1.0;
+    vec3 noise;
+    noise.r = lumaNoise + chromaR * chromaAmount;
+    noise.g = lumaNoise + chromaG * chromaAmount;
+    noise.b = lumaNoise + chromaB * chromaAmount;
     
-    float grainB = organicNoise(pixelPos * scale3 + 100.0, seed + 66.0);
-    grainB += cellularGrain(pixelPos * 0.47, seed + 66.0) * 0.3;
-    grainB = grainB * 2.0 - 1.0;
+    noise *= amount * shadowFactor * 0.15;
     
-    vec3 fineGrain = vec3(grainR, grainG, grainB);
-    
-    float coarseScale = 0.15 / max(uGrainSize, 0.3);
-    vec2 coarsePos = pixelPos * coarseScale;
-    
-    float coarse = cellularGrain(coarsePos, seed * 0.1);
-    coarse = smoothstep(0.1, 0.5, coarse);
-    
-    float macroNoise = goldNoise(uv * 5.0, frame * 0.01);
-    float macroMod = 0.75 + macroNoise * 0.5;
-    
-    vec3 grain = fineGrain * coarse * toneMask * macroMod * uGrainStrength;
-    
-    return grain;
+    return noise;
 }
 
 float getVignette(vec2 uv, float strength) {
@@ -307,24 +286,21 @@ void main() {
     rgb = applyVibrance(rgb, uVibrance);
     
     rgb = applyTones(rgb, uHighlights, uMidtones, uShadows);
+    
+    // Per-channel tone adjustments
+    rgb = applyChannelTones(rgb, uTonesWhite, uTonesRed, uTonesGreen, uTonesBlue);
     rgb = clamp(rgb, 0.0, 1.0);
     
     Y = luma(rgb);
     
-    // AUTHENTIC FILM GRAIN
+    // HIGH ISO NOISE - per-pixel random
     if (uGrainStrength > 0.001) {
-        vec3 grain = getAuthenticFilmGrain(vTexCoord, Y);
-        rgb += grain * 0.18;
+        vec3 noise = getHighIsoNoise(vTexCoord, Y);
+        rgb += noise;
     }
     
     if (uVignette > 0.001) {
         rgb *= getVignette(vTexCoord, uVignette);
-    }
-    
-    // Clarity (local contrast)
-    if (abs(uClarity) > 0.001) {
-        rgb = applyClarity(rgb, vTexCoord, uClarity);
-        rgb = clamp(rgb, 0.0, 1.0);
     }
     
     // Bloom (glow on highlights)

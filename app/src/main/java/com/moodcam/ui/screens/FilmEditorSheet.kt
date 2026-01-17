@@ -239,7 +239,7 @@ private fun BaseTab(
 }
 
 /**
- * Tones tab: Only curve editor for maximum space
+ * Tones tab: Per-channel Highlights/Midtones/Shadows sliders
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -248,15 +248,41 @@ private fun TonesTab(
     onParamsChanged: (PresetParams) -> Unit
 ) {
     var selectedChannel by remember { mutableIntStateOf(0) }
-    val channels = listOf("RGB", "Red", "Green", "Blue")
+    val channels = listOf("White", "Red", "Green", "Blue")
+    val channelColors = listOf(
+        Color.White,
+        Color(0xFFFF5252),
+        Color(0xFF69F0AE),
+        Color(0xFF448AFF)
+    )
+    
+    // Get current channel values
+    val currentTones = when(selectedChannel) {
+        0 -> params.channelTones.white
+        1 -> params.channelTones.red
+        2 -> params.channelTones.green
+        else -> params.channelTones.blue
+    }
+    
+    // Helper to update channel values
+    fun updateTones(newTones: com.moodcam.preset.ToneValues) {
+        val newChannelTones = when(selectedChannel) {
+            0 -> params.channelTones.copy(white = newTones)
+            1 -> params.channelTones.copy(red = newTones)
+            2 -> params.channelTones.copy(green = newTones)
+            else -> params.channelTones.copy(blue = newTones)
+        }
+        onParamsChanged(params.copy(channelTones = newChannelTones))
+    }
     
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 12.dp, vertical = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        // Channel Selector - compact row
+        // Channel selector
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(6.dp)
@@ -267,54 +293,52 @@ private fun TonesTab(
                     onClick = { selectedChannel = index },
                     label = { Text(name, style = MaterialTheme.typography.labelMedium) },
                     colors = FilterChipDefaults.filterChipColors(
-                        selectedContainerColor = when(index) {
-                            1 -> Color(0xFFFF5252).copy(alpha = 0.2f)
-                            2 -> Color(0xFF69F0AE).copy(alpha = 0.2f)
-                            3 -> Color(0xFF448AFF).copy(alpha = 0.2f)
-                            else -> MaterialTheme.colorScheme.secondaryContainer
-                        },
-                        selectedLabelColor = MaterialTheme.colorScheme.onSecondaryContainer
+                        selectedContainerColor = channelColors[index].copy(alpha = 0.25f),
+                        selectedLabelColor = channelColors[index]
                     ),
                     modifier = Modifier.height(32.dp)
                 )
             }
         }
         
-        // Curve Editor - takes ALL remaining space
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-                .background(Color(0xFF1E1E1E), androidx.compose.foundation.shape.RoundedCornerShape(12.dp))
-                .padding(8.dp)
+        Divider()
+        
+        // Current channel indicator
+        Text(
+            text = "Regolazione ${channels[selectedChannel]}",
+            style = MaterialTheme.typography.titleSmall,
+            color = channelColors[selectedChannel]
+        )
+        
+        // Alte (Highlights)
+        ParamSlider(
+            label = "Alte (Highlights)",
+            value = currentTones.highlights,
+            valueRange = -1f..1f,
+            valueDisplay = { String.format("%+.0f%%", it * 100) }
         ) {
-            CurveEditor(
-                points = when(selectedChannel) {
-                    0 -> params.curves.lumaPoints
-                    1 -> params.curves.rPoints
-                    2 -> params.curves.gPoints
-                    else -> params.curves.bPoints
-                },
-                channelIndex = selectedChannel,
-                modifier = Modifier.fillMaxSize(),
-                onPointsChanged = { newPoints ->
-                    val newCurves = when(selectedChannel) {
-                        0 -> params.curves.copy(lumaPoints = newPoints)
-                        1 -> params.curves.copy(rPoints = newPoints)
-                        2 -> params.curves.copy(gPoints = newPoints)
-                        else -> params.curves.copy(bPoints = newPoints)
-                    }
-                    onParamsChanged(params.copy(curves = newCurves))
-                }
-            )
+            updateTones(currentTones.copy(highlights = it))
         }
         
-        Text(
-            text = "Double tap to add/remove points",
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
+        // Medie (Midtones)
+        ParamSlider(
+            label = "Medie (Midtones)",
+            value = currentTones.midtones,
+            valueRange = -1f..1f,
+            valueDisplay = { String.format("%+.0f%%", it * 100) }
+        ) {
+            updateTones(currentTones.copy(midtones = it))
+        }
+        
+        // Basse (Shadows)
+        ParamSlider(
+            label = "Basse (Shadows)",
+            value = currentTones.shadows,
+            valueRange = -1f..1f,
+            valueDisplay = { String.format("%+.0f%%", it * 100) }
+        ) {
+            updateTones(currentTones.copy(shadows = it))
+        }
     }
 }
 
@@ -461,15 +485,6 @@ private fun EffectsTab(
             valueDisplay = { String.format("%.0f%%", it * 100) }
         ) {
             onParamsChanged(params.copy(effects = params.effects.copy(halation = it)))
-        }
-        
-        ParamSlider(
-            label = "Clarity",
-            value = params.clarity,
-            valueRange = -1f..1f,
-            valueDisplay = { String.format("%+.0f", it * 100) }
-        ) {
-            onParamsChanged(params.copy(clarity = it))
         }
         
         Divider(modifier = Modifier.padding(vertical = 8.dp))

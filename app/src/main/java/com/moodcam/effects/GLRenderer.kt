@@ -220,6 +220,13 @@ class GLRenderer(
             
             // Portrait mode (synthetic bokeh)
             setInt("uPortraitMode", if (isPortraitMode) 1 else 0)
+            
+            // Per-channel tone adjustments
+            val tones = params.channelTones
+            setVec3("uTonesWhite", tones.white.highlights, tones.white.midtones, tones.white.shadows)
+            setVec3("uTonesRed", tones.red.highlights, tones.red.midtones, tones.red.shadows)
+            setVec3("uTonesGreen", tones.green.highlights, tones.green.midtones, tones.green.shadows)
+            setVec3("uTonesBlue", tones.blue.highlights, tones.blue.midtones, tones.blue.shadows)
         }
         
         // Set up vertex attributes
